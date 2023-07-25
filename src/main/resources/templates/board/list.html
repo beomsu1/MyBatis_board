@@ -69,6 +69,7 @@
         const actionForm = document.querySelector(".acf")
         const listTable = document.querySelector(".listTable")
         const paging = document.querySelector(".paging")
+        const pageObj = document.querySelector("input[name=page]")
 
         const { page, size } = [[${pageRequestDTO}]]
 
@@ -80,7 +81,7 @@
         console.log("total: " + total)
 
         // 페이지 동적으로 생성
-        const pageList = makePages(page,size,total)
+        const pageList = makePage(page,size,total)
         paging.innerHTML = pageList
 
         //페이징 이동 버튼
@@ -90,9 +91,19 @@
             e.stopPropagation()
 
             // 타겟 잡기
-            const target = e.tartget
+            const target = e.target
 
             console.log(target)
+
+            // paging 번호 가져오기
+            const pageNum = target.getAttribute("href")
+            console.log(pageNum)
+
+            //쿼리에 들어오는 page값 수정하기
+            pageObj.value = pageNum
+
+            actionForm.setAttribute("action" , "/board/list")
+            actionForm.submit()
 
         },false)
 
