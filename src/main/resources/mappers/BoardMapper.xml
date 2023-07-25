@@ -11,7 +11,7 @@
 select * from tbl_board
 where tno > 0
 order by tno desc
-limit #{skip} , #{end}
+limit #{skip} , #{size}
 
 </select>
 

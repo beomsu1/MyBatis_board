@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/boardLayout.html}">
+      xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout/boardLayout.html}">
 
 <head>
     <meta charset="UTF-8">
@@ -10,78 +11,90 @@
 
 <body>
 
-    <div layout:fragment="content">
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">List</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover listTable">
-                                    <thead>
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>제목</th>
-                                            <th>작성자</th>
-                                            <th>등록일</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="list : ${boardList.list}">
-                                            <td th:text="${list.tno}" th:data-tno="${list.tno}"></td>
-                                            <td th:text="${list.title}" th:data-tno="${list.tno}"></td>
-                                            <td th:text="${list.writer}" th:data-tno="${list.tno}"></td>
-                                            <td th:text="${list.regDate}" th:data-tno="${list.tno}"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <div class="btn-group me-2 paging" role="group" aria-label="First group"></div>
-
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">List</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover listTable">
+                                <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>등록일</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="list : ${boardList.list}">
+                                    <td th:text="${list.tno}" th:data-tno="${list.tno}"></td>
+                                    <td th:text="${list.title}" th:data-tno="${list.tno}"></td>
+                                    <td th:text="${list.writer}" th:data-tno="${list.tno}"></td>
+                                    <td th:text="${list.regDate}" th:data-tno="${list.tno}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div>
                                 <form class="acf" action="/board/regist" method="get">
                                     <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
                                     <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+                                    <a href="/board/regist" class="btn btn-primary">등록</a>
+                                </form>
                             </div>
-                            <a href="/board/regist" class="btn btn-primary">등록</a>
+
+                            <div class="btn-group me-2 paging" role="group" aria-label="First group"></div>
                         </div>
-                        </form>
-                        <!-- /.card -->
+                        <!-- /.col -->
                     </div>
-                    <!-- /.col -->
+                    <!-- /.row -->
                 </div>
-                <!-- /.row -->
+                <!-- /.container-fluid -->
             </div>
-            <!-- /.container-fluid -->
-        </section>
+        </div>
+    </section>
 
-        <script src="/js/paging.js"></script>
+    <script src="/js/paging.js"></script>
 
-    </div>
+</div>
 
-
-    <script layout:fragment="script" th:inline="javascript">
+<script layout:fragment="script" th:inline="javascript">
 
         // 태그 객체 생성
         const actionForm = document.querySelector(".acf")
         const listTable = document.querySelector(".listTable")
         const paging = document.querySelector(".paging")
 
-        const { page, size } = [[${ pageRequestDTO }]]
+        const { page, size } = [[${pageRequestDTO}]]
 
         console.log("page:" + page)
         console.log("size: " + size)
 
-        const { total } = [[$boardList]]
+        const {total} = [[${boardList}]]
 
         console.log("total: " + total)
 
         // 페이지 동적으로 생성
-        const pageList = makePage(page,size,total)
+        const pageList = makePages(page,size,total)
         paging.innerHTML = pageList
+
+        //페이징 이동 버튼
+        paging.addEventListener("click" , (e)=>{
+
+            e.preventDefault()
+            e.stopPropagation()
+
+            // 타겟 잡기
+            const target = e.tartget
+
+            console.log(target)
+
+        },false)
 
         listTable.addEventListener("click", (e) => {
 
@@ -104,7 +117,10 @@
         }, false)
 
 
-    </script>
+
+
+
+</script>
 
 
 </body>
