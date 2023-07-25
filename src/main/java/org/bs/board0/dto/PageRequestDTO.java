@@ -50,7 +50,7 @@ public class PageRequestDTO {
     // 끝 위치 계산 메소드 생성
     public int getCountEnd() {
 
-        int temp = (int)(Math.ceil(this.page / 10.0)) * this.size * 10;
+        int temp = (int)Math.ceil(this.page / 10.0) * (this.size * 10);
 
         // 중복된 페이지를 보여주지 않기 위해 +1
         return temp + 1;
