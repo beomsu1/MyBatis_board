@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/boardLayout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read</title>
+</head>
+
+<body>
+    <div class="container-fluid pt-4 px-4" layout:fragment="content">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h2 class="mb-4">게시판 조회</h2>
+                <form method="post" action="/board/delete/" class="acf">
+                    <div class="mb-3">
+                        <label for="boardTitle" class="form-label">번호</label>
+                        <input type="text" class="form-control" id="boardTno" th:value="${boardRead.tno}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardTitle" class="form-label">제목</label>
+                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.title}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardContent" class="form-label">내용</label>
+                        <input type="text" class="form-control" id="boardContent" th:value="${boardRead.content}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardWriter" class="form-label">작성자</label>
+                        <input type="text" class="form-control" id="boardWriter" th:value="${boardRead.writer}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardTitle" class="form-label">작성일</label>
+                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.regDate}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardTitle" class="form-label">수정일</label>
+                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.updateDate}" readonly>
+                    </div>
+                    <div class="button_wrap">
+                        <button  class="btn btn-primary modifyBtn">수정</button>
+                        <button  class="btn btn-primary deleteBtn">삭제</button>
+                        <a href="/board/list" class="btn btn-danger">목록</a>
+                    </div>
+                </form>
+  
+            </div>
+        </div>
+
+
+        <script layout:fragment="script" th:inline="javascript">
+
+            const actionForm = document.querySelector(".acf")
+            const modify1 = document.querySelector(".modifyBtn")
+            const delete1 = document.querySelector(".deleteBtn")
+
+            const {tno} = [[${boardRead}]]
+
+            console.log(tno)
+
+            modify1.addEventListener("click", (e)=>{
+
+                e.preventDefault()
+                e.stopPropagation()
+
+                actionForm.setAttribute("action" , `/board/modify/${tno}`)
+                actionForm.setAttribute("method" , `get`)
+                actionForm.submit()
+
+
+            }, false)
+
+            delete1.addEventListener("click", (e) =>{
+
+                e.preventDefault()
+                e.stopPropagation()
+
+                actionForm.setAttribute("action", `/board/delete/${tno}`)
+                actionForm.setAttribute("method", `post`)
+                actionForm.submit()
+
+
+            },false)
+
+
+        </script>
+
+</body>
+
+</html>

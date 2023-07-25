@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.bs.board0.mappers.BoardMapper">
+
+<!-- list -->
+<select id="boardList" parameterType="org.bs.board0.dto.BoardDTO" resultType="org.bs.board0.dto.BoardDTO">
+
+select * from tbl_board
+where tno > 0
+order by tno desc
+limit #{skip} , #{end}
+
+</select>
+
+<!-- insert -->
+<insert id="boardInsert" parameterType="org.bs.board0.dto.BoardDTO">
+
+insert into tbl_board (title,content,writer) value (#{title},#{content},#{writer})
+        <selectKey resultType="long" keyProperty="tno" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+</insert>
+
+<!-- read -->
+<select id="boardRead" resultType="org.bs.board0.dto.BoardDTO">
+
+select * from tbl_board
+where tno = #{tno}
+
+</select>
+
+<!-- update -->
+<update id="boardUpdate" parameterType="org.bs.board0.dto.BoardDTO">
+
+update tbl_board set title=#{title} , content=#{content} , writer=#{writer} , updateDate = now()
+where tno=#{tno}
+
+</update>
+
+<delete id="boardDelete">
+
+delete from tbl_board where tno=#{tno}
+
+</delete>
+
+<!-- total -->
+<select id="total">
+
+    select count(*)
+    from
+    (select tno from tbl_board
+    where tno > 0
+    limit #{countEnd}) board
+
+</select>
+
+
+</mapper>

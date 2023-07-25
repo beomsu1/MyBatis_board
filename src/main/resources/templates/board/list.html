@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/boardLayout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">List</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover listTable">
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>제목</th>
+                                            <th>작성자</th>
+                                            <th>등록일</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="list : ${boardList.list}">
+                                            <td th:text="${list.tno}" th:data-tno="${list.tno}"></td>
+                                            <td th:text="${list.title}" th:data-tno="${list.tno}"></td>
+                                            <td th:text="${list.writer}" th:data-tno="${list.tno}"></td>
+                                            <td th:text="${list.regDate}" th:data-tno="${list.tno}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="btn-group me-2 paging" role="group" aria-label="First group"></div>
+
+                                <form class="acf" action="/board/regist" method="get">
+                                    <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+                                    <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+                            </div>
+                            <a href="/board/regist" class="btn btn-primary">등록</a>
+                        </div>
+                        </form>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+
+        <script src="/js/paging.js"></script>
+
+    </div>
+
+
+    <script layout:fragment="script" th:inline="javascript">
+
+        // 태그 객체 생성
+        const actionForm = document.querySelector(".acf")
+        const listTable = document.querySelector(".listTable")
+        const paging = document.querySelector(".paging")
+
+        const { page, size } = [[${ pageRequestDTO }]]
+
+        console.log("page:" + page)
+        console.log("size: " + size)
+
+        const { total } = [[$boardList]]
+
+        console.log("total: " + total)
+
+        // 페이지 동적으로 생성
+        const pageList = makePage(page,size,total)
+        paging.innerHTML = pageList
+
+        listTable.addEventListener("click", (e) => {
+
+            e.preventDefault()
+            e.stopPropagation()
+
+            console.log(e.target)
+
+            const target = e.target;
+
+            const tno = target.getAttribute("data-tno")
+
+            console.log(tno)
+
+            actionForm.setAttribute("action", `/board/read/${tno}`)
+            actionForm.setAttribute("method", `get`)
+            actionForm.submit()
+
+
+        }, false)
+
+
+    </script>
+
+
+</body>
+
+</html>

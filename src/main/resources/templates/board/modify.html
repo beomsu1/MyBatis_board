@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/boardLayout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read</title>
+</head>
+
+<body>
+    <div class="container-fluid pt-4 px-4" layout:fragment="content">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h2 class="mb-4">게시판 수정</h2>
+                <form method="get" action="/board/delete/" class="acf">
+                    <div class="mb-3">
+                        <label for="boardTitle" class="form-label">번호</label>
+                        <input type="text" name="tno" class="form-control" id="boardTno" th:value="${boardModify.tno}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardTitle" class="form-label">제목</label>
+                        <input type="text" name="title" class="form-control" id="boardTitle" th:value="${boardModify.title}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardContent" class="form-label">내용</label>
+                        <input type="text" name="content" class="form-control" id="boardContent" th:value="${boardModify.content}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardWriter" class="form-label">작성자</label>
+                        <input type="text" name="writer" class="form-control" id="boardWriter" th:value="${boardModify.writer}" readonly>
+                    </div>
+                    <div class="button_wrap">
+                        <button  class="btn btn-primary modifyBtn">수정</button>
+                        <a href="/board/list" class="btn btn-primary returnBtn">목록</a>
+                    </div>
+                </form>
+  
+            </div>
+        </div>
+
+
+        <script layout:fragment="script" th:inline="javascript">
+
+            const actionForm = document.querySelector(".acf")
+            const modify1 = document.querySelector(".modifyBtn")
+            const return1 = document.querySelector(".returnBtn")
+
+            const {tno} = [[${boardModify}]]
+
+            console.log(tno)
+
+            modify1.addEventListener("click", (e)=>{
+
+                e.preventDefault()
+                e.stopPropagation()
+
+                actionForm.setAttribute("action", "/board/modify")
+                actionForm.setAttribute("method", "post")
+                actionForm.submit()
+
+            },false)
+            
+
+        </script>
+
+</body>
+
+</html>
