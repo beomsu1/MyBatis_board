@@ -7,6 +7,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List</title>
+
+    <style>
+        .paging{
+            display: flex;
+            justify-content: center;
+            width: 50%;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -40,6 +50,7 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <br>
                             <div>
                                 <form class="acf" action="/board/regist" method="get">
                                     <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
@@ -47,8 +58,11 @@
                                     <a href="/board/regist" class="btn btn-primary">등록</a>
                                 </form>
                             </div>
-
-                            <div class="btn-group me-2 paging" role="group" aria-label="First group"></div>
+                            <br>
+                            <div>
+                                <div class="btn-group me-2 paging" role="group" aria-label="First group"></div>
+                            </div>
+                            
                         </div>
                         <!-- /.col -->
                     </div>
