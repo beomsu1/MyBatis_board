@@ -10,6 +10,7 @@ public class PageResponseDTO<E> {
 
     private List<E> list;
     private int total;
+
     private boolean replyLast;
 
     @Builder(builderMethodName = "withAll")

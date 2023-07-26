@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService{
-    
+public class BoardServiceImpl implements BoardService {
+
     private final BoardMapper boardMapper;
 
     // list
@@ -26,9 +26,10 @@ public class BoardServiceImpl implements BoardService{
 
         // PageResponseDTO 객체 생성
         return PageResponseDTO.<BoardDTO>withAll()
-        .list(list)
-        .total(total)
-        .build();
+                .list(list)
+                .total(total)
+                .pageRequestDTO(pageRequestDTO)
+                .build();
     }
 
     // insert
@@ -48,7 +49,7 @@ public class BoardServiceImpl implements BoardService{
     // update
     @Override
     public int boardUpdate(BoardDTO boardDTO) {
-        
+
         return boardMapper.boardUpdate(boardDTO);
     }
 

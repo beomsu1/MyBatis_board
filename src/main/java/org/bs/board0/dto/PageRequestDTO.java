@@ -19,7 +19,6 @@ public class PageRequestDTO {
 
     private boolean replyLast;
 
-
     // 페이지 설정
     public void setPage(int page) {
 
