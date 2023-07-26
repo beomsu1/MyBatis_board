@@ -79,14 +79,14 @@ public class ReplyMapperTest {
 
     // 댓글 조회
     @Test
-    public void replyRead(){
+    public void replyReadTest(){
 
         log.info(replyMapper.replyRead(5L));
     }
 
     // 댓글 삭제
     @Test
-    public void replyDelete(){
+    public void replyDeleteTest(){
 
         replyMapper.replyDelete(7L);
 
@@ -95,7 +95,7 @@ public class ReplyMapperTest {
 
     // 댓글 수정
     @Test
-    public void replyUpdate(){
+    public void replyUpdateTest(){
 
         ReplyDTO replyDTO = ReplyDTO.builder()
         .reply("변경할게요~!")
@@ -105,6 +105,15 @@ public class ReplyMapperTest {
         replyMapper.replyUpdate(replyDTO);
 
         log.info("수정 완료~!");
+    }
+
+    // 게시물의 댓글 개수
+    @Test
+    public void replyTotalTest(){
+
+        int total = replyMapper.replyTotal(2040L);
+
+        log.info(total);
     }
 
     

@@ -36,4 +36,7 @@ public interface ReplyMapper {
     // reply update
     int replyUpdate(ReplyDTO replyDTO);
 
+    // reply total
+    int replyTotal(Long rno);
+
 }

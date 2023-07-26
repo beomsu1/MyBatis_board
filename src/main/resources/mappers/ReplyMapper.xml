@@ -82,5 +82,12 @@ where rno=#{rno}
 
 </update>
 
+<!-- 게시물의 댓글 총 갯수 -->
+<select id="replyTotal">
+
+select count(rno) from tbl_reply where tno=#{rno}
+
+</select>
+
 
 </mapper>
