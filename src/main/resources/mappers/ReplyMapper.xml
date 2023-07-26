@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.bs.board0.mappers.ReplyMapper">
+
+<!-- 게시물의 대한 replylist 목록 -->
+<select id="replyList" resultType="org.bs.board0.dto.ReplyDTO">
+
+select if(rno = gno ,  0 , 1) as step , rno, tno, reply, replyer, replyDate, gno
+from tbl_reply
+where tno =#{tno} and rno > 0
+order by rno asc , gno asc
+<!-- mapper에서 PageRequestDTO를 pr로 받았기 떄문에 pr.~ 으로 시작 -->
+limit #{pr.skip} , #{pr.size}
+
+</select>
+
+<!-- ==============원본 댓글 처리================== -->
+
+<!-- reply Insert -->
+<insert id="replyInsert" parameterType="org.bs.board0.dto.ReplyDTO">
+
+insert into tbl_reply (tno,reply,replyer) value (#{tno},#{reply},#{replyer})
+
+    <!-- 마지막 rno번호 찾기 -->
+    <selectKey resultType="long" keyProperty="rno" order="AFTER">
+      select last_insert_id()
+    </selectKey>
+
+</insert>
+
+<!-- 생성된 댓글에 gno를 rno 값으로 변경해서 원본 댓글로 만들기 -->
+<update id="replyUpdateGno">
+
+update tbl_reply set gno =#{rno} where rno =#{rno}
+
+</update>
+
+<!-- ==============원본 댓글 처리 완=============== -->
+
+<!-- 대댓글 생성 -->
+
+<insert id="replyChildInsert" parameterType="org.bs.board0.dto.ReplyDTO">
+
+insert into tbl_reply (tno,reply,replyer,gno) value (#{tno},#{reply},#{replyer},#{gno})
+
+    <!-- 마지막 rno번호 찾기 -->
+    <selectKey resultType="long" keyProperty="rno" order="AFTER">
+     select last_insert_id()
+    </selectKey>
+
+</insert>
+
+<!-- 댓글 조회 -->
+<select id="replyRead" resultType="org.bs.board0.dto.ReplyDTO">
+
+select rno, tno, reply, replyer, status
+from tbl_reply
+where rno =#{rno}
+
+</select>
+
+<!-- 댓글 삭제!  이지만 update를 사용해서 값을 변경해주자 -->
+<update id="replyDelete">
+
+update tbl_reply
+set
+reply = '삭제된 댓글입니다.' , replyDate = now() , status = true
+where rno=#{rno}
+
+</update>
+
+<!-- 댓글 수정 -->
+<update id="replyUpdate" parameterType="org.bs.board0.dto.ReplyDTO">
+
+update tbl_reply
+set
+reply =#{reply} , replyDate = now()
+where rno=#{rno}
+
+</update>
+
+
+</mapper>
