@@ -68,7 +68,7 @@ public class ReplyMapperTest {
         .tno(2040L)
         .reply("대댓글")
         .replyer("범수123")
-        .gno(5)
+        .gno(5L)
         .build();
 
         replyMapper.replyChildInsert(replyDTO);

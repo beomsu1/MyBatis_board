@@ -4,18 +4,19 @@ import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
 
-@Builder
 @Data
-@ToString
 public class PageResponseDTO<E> {
 
     private List<E> list;
     private int total;
+    private boolean replyLast;
 
-    public PageResponseDTO(List<E> list, int total) {
+    @Builder(builderMethodName = "withAll")
+    public PageResponseDTO(List<E> list, int total, PageRequestDTO pageRequestDTO) {
         this.list = list;
         this.total = total;
+        this.replyLast = pageRequestDTO.isReplyLast();
+
     }
 }

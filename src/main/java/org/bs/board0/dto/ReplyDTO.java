@@ -28,7 +28,7 @@ public class ReplyDTO {
     // 대댓글
 
     @Builder.Default
-    private int gno = 0; // 대댓글처리 번호 0 default설정 - gno가 1일 때 대댓글
+    private Long gno = 0L; // 대댓글처리 번호 0 default설정 - gno가 1일 때 대댓글
 
     private int step; // 대댓글 여부 확인
 

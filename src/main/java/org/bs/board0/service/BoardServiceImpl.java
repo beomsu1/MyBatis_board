@@ -25,7 +25,7 @@ public class BoardServiceImpl implements BoardService{
         List<BoardDTO> list = boardMapper.boardList(pageRequestDTO);
 
         // PageResponseDTO 객체 생성
-        return PageResponseDTO.<BoardDTO>builder()
+        return PageResponseDTO.<BoardDTO>withAll()
         .list(list)
         .total(total)
         .build();
