@@ -10,9 +10,11 @@ import org.bs.board0.mappers.ReplyMapper;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyMapper replyMapper;
@@ -63,6 +65,7 @@ public class ReplyServiceImpl implements ReplyService {
         // 댓글
         if (gno == 0) {
 
+        log.info("Reply Service----------------------------" + replyMapper.replyInsert(replyDTO));
             // 값이 들어왔나 확인 하기위해 int count라는 변수에 담자
             int count = replyMapper.replyInsert(replyDTO);
 
@@ -89,6 +92,7 @@ public class ReplyServiceImpl implements ReplyService {
 
             result = replyDTO.getRno();
         }
+
 
         return result;
     }

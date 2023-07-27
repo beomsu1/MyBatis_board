@@ -22,7 +22,7 @@ limit #{pr.skip} , #{pr.size}
 <!-- reply Insert -->
 <insert id="replyInsert" parameterType="org.bs.board0.dto.ReplyDTO">
 
-insert into tbl_reply (tno,reply,replyer) value (#{tno},#{reply},#{replyer})
+insert into tbl_reply (tno,reply,replyer) values (#{tno},#{reply},#{replyer})
 
     <!-- 마지막 rno번호 찾기 -->
     <selectKey resultType="long" keyProperty="rno" order="AFTER">
@@ -44,7 +44,7 @@ update tbl_reply set gno =#{rno} where rno =#{rno}
 
 <insert id="replyChildInsert" parameterType="org.bs.board0.dto.ReplyDTO">
 
-insert into tbl_reply (tno,reply,replyer,gno) value (#{tno},#{reply},#{replyer},#{gno})
+insert into tbl_reply (tno,reply,replyer,gno) values (#{tno},#{reply},#{replyer},#{gno})
 
     <!-- 마지막 rno번호 찾기 -->
     <selectKey resultType="long" keyProperty="rno" order="AFTER">
