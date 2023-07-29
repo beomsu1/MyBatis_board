@@ -26,6 +26,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
     
+    
     // replyList
     @GetMapping("{tno}/list")
     public PageResponseDTO<ReplyDTO> getList(@PathVariable("tno") Long tno , PageRequestDTO pageRequestDTO){
