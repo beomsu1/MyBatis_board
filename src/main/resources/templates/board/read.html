@@ -46,19 +46,54 @@
                 </form>
   
             </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="/js/reply.js"></script>
+
         </div>
+
+        <!-- 댓글 등록창 -->
+        <div class="col-sm-12 col-md-12 col-xl-12">
+            <div class="h-100 bg-light rounded p-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h6 class="mb-0">Reply Register</h6>
+              </div>
+              <div class="mb-3 replyRegister">
+                <input type="hidden" name="tno" th:value="${boardRead.tno}">
+                <input type="hidden" name="replyer" value="beomsu">
+                <input type="text" name="reply" class="form-control">
+              </div>
+              <div class="button_wrap">
+                <button class="btn btn-primary btnRegister">Reply Register</button>
+              </div>
+            </div>
+
+
+          </div>
 
 
         <script layout:fragment="script" th:inline="javascript">
+
+            // 태그 객체 선언
 
             const actionForm = document.querySelector(".acf")
             const modify1 = document.querySelector(".modifyBtn")
             const delete1 = document.querySelector(".deleteBtn")
 
+            // 댓글 //////////////////////////
+
+            // 등록
+            const replyRegist = document.querySelector(".replyRegister")
+            const btnRegist = document.querySelector(".btnRegister")
+
+        
+
+
             const {tno} = [[${boardRead}]]
 
             console.log(tno)
 
+            // 수정
             modify1.addEventListener("click", (e)=>{
 
                 e.preventDefault()
@@ -71,6 +106,7 @@
 
             }, false)
 
+            // 삭제
             delete1.addEventListener("click", (e) =>{
 
                 e.preventDefault()
@@ -82,6 +118,23 @@
 
 
             },false)
+
+
+
+            // 댓글 등록
+            btnRegist.addEventListener("click", (e) => {
+
+                e.preventDefault()
+                e.stopPropagation()
+
+                // value 값 가져오기
+                const tno = replyRegist.querySelector("input[name=tno]").value
+                const reply = replyRegist.querySelector("input[name=reply]").value
+                const replyer = replyRegist.querySelector("input[name=replyer]").value
+
+                console.log(tno , reply , replyer)
+
+            }, false)
 
 
         </script>
