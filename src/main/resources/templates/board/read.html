@@ -60,13 +60,14 @@
               </div>
               <div class="mb-3 replyRegister">
                 <input type="hidden" name="tno" th:value="${boardRead.tno}">
-                <input type="hidden" name="replyer" value="beomsu">
-                <input type="text" name="reply" class="form-control">
+                <input type="text" name="replyer" placeholder="작성자를 입력해주세요">
+                <input type="text" name="reply" class="form-control" placeholder="내용을 입력해주세요">
               </div>
               <div class="button_wrap">
                 <button class="btn btn-primary btnRegister">Reply Register</button>
               </div>
             </div>
+            
 
 
           </div>
@@ -133,6 +134,15 @@
                 const replyer = replyRegist.querySelector("input[name=replyer]").value
 
                 console.log(tno , reply , replyer)
+
+                // 객체로 생성
+                const replyData = { tno , reply , replyer}
+
+                // axios 통신
+                replyPostRegist(replyData).then(data => { 
+                    alert(data.result + "번이 등록되었습니다.")
+                    replyRegist.querySelector("input[name=reply]").value = ""
+                },false)
 
             }, false)
 
