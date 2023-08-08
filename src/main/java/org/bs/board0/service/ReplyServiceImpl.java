@@ -34,9 +34,9 @@ public class ReplyServiceImpl implements ReplyService {
 
         // 끝페이지 계산
         if (!pageRequestDTO.isReplyLast()) {
-            
+
             // 페이지 넘버에 넣어주기
-            pageNum = (int)(Math.ceil(total / (double) pageRequestDTO.getSize()));
+            pageNum = (int) (Math.ceil(total / (double) pageRequestDTO.getSize()));
 
             // 페이지번호가 0보다 작거나 같으면 1로 설정
             pageNum = pageNum <= 0 ? 1 : pageNum;
@@ -59,25 +59,21 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public Long replyInsert(ReplyDTO replyDTO) {
         Long result = null;
-
         Long gno = replyDTO.getGno();
 
         // 댓글
         if (gno == 0) {
-
-        log.info("Reply Service----------------------------" + replyMapper.replyInsert(replyDTO));
             // 값이 들어왔나 확인 하기위해 int count라는 변수에 담자
             int count = replyMapper.replyInsert(replyDTO);
 
             // 예외처리
             if (count != 1) {
-                throw new RuntimeException("Reply insert Error");
+                throw new RuntimeException("Reply Insert Exception");
             }
 
             // rno 값으로 gno업데이트
             Long rno = replyDTO.getRno();
             replyMapper.replyUpdateGno(rno);
-
             result = rno;
 
         } else {
@@ -87,13 +83,11 @@ public class ReplyServiceImpl implements ReplyService {
 
             // 예외처리
             if (count != 1) {
-                throw new ExecutorException("Reply insert Error");
+                throw new RuntimeException("Reply Insert Exception");
             }
 
             result = replyDTO.getRno();
         }
-
-
         return result;
     }
 

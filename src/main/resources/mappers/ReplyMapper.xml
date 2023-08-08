@@ -10,7 +10,7 @@
 
 select if(rno = gno ,  0 , 1) as step , rno, tno, reply, replyer, replyDate, gno
 from tbl_reply
-where tno =#{tno} and rno > 0
+where tno =#{tno} and rno > 0 and status = 0
 order by rno asc , gno asc
 <!-- mapper에서 PageRequestDTO를 pr로 받았기 떄문에 pr.~ 으로 시작 -->
 limit #{pr.skip} , #{pr.size}

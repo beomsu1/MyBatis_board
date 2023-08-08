@@ -24,27 +24,31 @@
                     </div>
                     <div class="mb-3">
                         <label for="boardContent" class="form-label">내용</label>
-                        <input type="text" class="form-control" id="boardContent" th:value="${boardRead.content}" readonly>
+                        <input type="text" class="form-control" id="boardContent" th:value="${boardRead.content}"
+                            readonly>
                     </div>
                     <div class="mb-3">
                         <label for="boardWriter" class="form-label">작성자</label>
-                        <input type="text" class="form-control" id="boardWriter" th:value="${boardRead.writer}" readonly>
+                        <input type="text" class="form-control" id="boardWriter" th:value="${boardRead.writer}"
+                            readonly>
                     </div>
                     <div class="mb-3">
                         <label for="boardTitle" class="form-label">작성일</label>
-                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.regDate}" readonly>
+                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.regDate}"
+                            readonly>
                     </div>
                     <div class="mb-3">
                         <label for="boardTitle" class="form-label">수정일</label>
-                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.updateDate}" readonly>
+                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.updateDate}"
+                            readonly>
                     </div>
                     <div class="button_wrap">
-                        <button  class="btn btn-primary modifyBtn">수정</button>
-                        <button  class="btn btn-primary deleteBtn">삭제</button>
+                        <button class="btn btn-primary modifyBtn">수정</button>
+                        <button class="btn btn-primary deleteBtn">삭제</button>
                         <a href="/board/list" class="btn btn-danger">목록</a>
                     </div>
                 </form>
-  
+
             </div>
 
             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -55,22 +59,35 @@
         <!-- 댓글 등록창 -->
         <div class="col-sm-12 col-md-12 col-xl-12">
             <div class="h-100 bg-light rounded p-4">
-              <div class="d-flex align-items-center justify-content-between mb-3">
-                <h6 class="mb-0">Reply Register</h6>
-              </div>
-              <div class="mb-3 replyRegister">
-                <input type="hidden" name="tno" th:value="${boardRead.tno}">
-                <input type="text" name="replyer" placeholder="작성자를 입력해주세요">
-                <input type="text" name="reply" class="form-control" placeholder="내용을 입력해주세요">
-              </div>
-              <div class="button_wrap">
-                <button class="btn btn-primary btnRegister">Reply Register</button>
-              </div>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="mb-0">Reply Register</h6>
+                </div>
+                <div class="mb-3 replyRegister">
+                    <input type="hidden" name="tno" th:value="${boardRead.tno}">
+                    <input type="text" name="replyer" placeholder="작성자를 입력해주세요">
+                    <input type="text" name="reply" class="form-control" placeholder="내용을 입력해주세요">
+                </div>
+                <div class="button_wrap">
+                    <button class="btn btn-primary btnRegister">Reply Register</button>
+                </div>
             </div>
-            
+
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div class="h-100 bg-light rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h6 class="mb-0">Reply</h6>
+                    </div>
+                    <div class="replyWrap"></div>
+                    <div class="btn-toolbar" role="toolbar" style="justify-content: center;">
+                        <!--/* paging */-->
+                        <ul class="btn-group me-2 paging replyPaging" role="group" aria-label="First group"></ul>
+                    </div>
+                </div>
+            </div>
 
 
-          </div>
+
+        </div>
 
 
         <script layout:fragment="script" th:inline="javascript">
@@ -86,29 +103,30 @@
             // 등록
             const replyRegist = document.querySelector(".replyRegister")
             const btnRegist = document.querySelector(".btnRegister")
+            const replyWrap = document.querySelector(".replyWrap")
 
-        
 
 
-            const {tno} = [[${boardRead}]]
+
+            const { tno } = [[${ boardRead }]]
 
             console.log(tno)
 
             // 수정
-            modify1.addEventListener("click", (e)=>{
+            modify1.addEventListener("click", (e) => {
 
                 e.preventDefault()
                 e.stopPropagation()
 
-                actionForm.setAttribute("action" , `/board/modify/${tno}`)
-                actionForm.setAttribute("method" , `get`)
+                actionForm.setAttribute("action", `/board/modify/${tno}`)
+                actionForm.setAttribute("method", `get`)
                 actionForm.submit()
 
 
             }, false)
 
             // 삭제
-            delete1.addEventListener("click", (e) =>{
+            delete1.addEventListener("click", (e) => {
 
                 e.preventDefault()
                 e.stopPropagation()
@@ -118,9 +136,7 @@
                 actionForm.submit()
 
 
-            },false)
-
-
+            }, false)
 
             // 댓글 등록
             btnRegist.addEventListener("click", (e) => {
@@ -133,20 +149,41 @@
                 const reply = replyRegist.querySelector("input[name=reply]").value
                 const replyer = replyRegist.querySelector("input[name=replyer]").value
 
-                console.log(tno , reply , replyer)
+                console.log(tno, reply, replyer)
 
                 // 객체로 생성
-                const replyData = { tno , reply , replyer}
+                const replyData = { tno, reply, replyer }
 
                 // axios 통신
-                replyPostRegist(replyData).then(data => { 
+                replyPostRegist(replyData).then(data => {
                     alert(data.result + "번이 등록되었습니다.")
                     replyRegist.querySelector("input[name=reply]").value = ""
-                },false)
+                    getListDefault()
+                }, false)
 
             }, false)
 
             // 대댓글
+
+
+            //대댓글 모달 보여주기
+            replyWrap.addEventListener("click", (e) => {
+                //event 막기
+                e.preventDefault()
+                e.stopPropagation()
+
+                //target 찾기
+                const target = e.target
+                const result = target.getAttribute("data-reply")
+                const gno = target.getAttribute("data-gno")
+                //console.log(target.getAttribute("data-reply"))
+
+                if (result === "reply") {
+                    replyModal.show()
+                    replyRegister2.querySelector("input[name=reply]").value = ""
+                    replyGno.innerHTML = `<input type="hidden" name="gno" value="${gno}">`
+                }
+            }, false)
 
 
         </script>
