@@ -165,27 +165,6 @@
 
             // 대댓글
 
-
-            //대댓글 모달 보여주기
-            replyWrap.addEventListener("click", (e) => {
-                //event 막기
-                e.preventDefault()
-                e.stopPropagation()
-
-                //target 찾기
-                const target = e.target
-                const result = target.getAttribute("data-reply")
-                const gno = target.getAttribute("data-gno")
-                //console.log(target.getAttribute("data-reply"))
-
-                if (result === "reply") {
-                    replyModal.show()
-                    replyRegister2.querySelector("input[name=reply]").value = ""
-                    replyGno.innerHTML = `<input type="hidden" name="gno" value="${gno}">`
-                }
-            }, false)
-
-
         </script>
 
 </body>
