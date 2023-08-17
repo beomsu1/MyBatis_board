@@ -86,6 +86,29 @@
                 </div>
             </div>
 
+            <!-- 대댓글 생성 -->
+            <div class="modal replyModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Reply Register
+                        </div>
+                        <div class="modal-body replyRegister2">
+                            <input type="hidden" name="bno" th:value="${boardRead.tno}">
+                            <input type="hidden" name="replyer" value="beomsu">
+                            <input type="text" name="reply" class="form-control">
+                            <div class="replyGno"></div>
+                        </div> 
+                        <div class="modal-footer">
+                            <button class="btn btn-primary btnRegister2">Reply Register</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                Close
+                            </button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
@@ -105,6 +128,10 @@
             const replyRegist = document.querySelector(".replyRegister")
             const btnRegist = document.querySelector(".btnRegister")
             const replyWrap = document.querySelector(".replyWrap")
+
+            const replyModal = new bootstrap.Modal(document.querySelector(".replyModal"))
+            const replyRegister2 = document.querySelector(".replyRegister2")
+            const replyGno = replyRegister2.querySelector(".replyGno")
 
             // 구조분해할당
             const { tno } = [[${ boardRead }]]
@@ -163,6 +190,28 @@
             }, false)
 
             // 대댓글
+
+
+            //대댓글 모달 보여주기
+            replyWrap.addEventListener("click", (e) => {
+
+                //event 막기
+                e.preventDefault()
+                e.stopPropagation()
+
+                //target 찾기
+                const target = e.target
+                const result = target.getAttribute("data-reply")
+                const gno = target.getAttribute("data-gno")
+                //console.log(target.getAttribute("data-reply"))
+
+                if (result === "reply") {
+                    replyModal.show()
+                    replyRegister2.querySelector("input[name=reply]").value = ""
+                    replyGno.innerHTML = `<input type="hidden" name="gno" value="${gno}">`
+                }
+            }, false)
+
 
         </script>
 
