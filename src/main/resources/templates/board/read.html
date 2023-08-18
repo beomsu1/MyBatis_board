@@ -64,7 +64,7 @@
                 </div>
                 <div class="mb-3 replyRegister">
                     <input type="hidden" name="tno" th:value="${boardRead.tno}">
-                    <input type="text" name="replyer" value="beomsu" placeholder="작성자를 입력해주세요">
+                    <input type="text" name="replyer" value="beomsu">
                     <input type="text" name="reply" class="form-control" placeholder="내용을 입력해주세요">
                 </div>
                 <div class="button_wrap">
@@ -149,6 +149,7 @@
                 const replyRegist = document.querySelector(".replyRegister")
                 const btnRegist = document.querySelector(".btnRegister")
                 const replyWrap = document.querySelector(".replyWrap")
+                const replyPaging = document.querySelector(".replyPaging")
 
                 const replyModal = new bootstrap.Modal(document.querySelector(".replyModal"))
                 const replyRegist2 = document.querySelector(".replyRegister2")
@@ -282,19 +283,21 @@
 
                     // target
                     const target = e.target
+                    //console.log(target)
 
-                    // rno값 가져오기
-                    const rno = target.getAttribute("data-rno")
-                    console.log(rno)
+                    // modify 버튼을 눌렀을 때만 모달을 띄움
+                    if (target.getAttribute("data-reply") === "modify") {
+                        
+                        // rno값 가져오기
+                        const rno = target.getAttribute("data-rno");
+                        console.log(rno);
 
-                    // console.log(target)
+                        replyModal2.show();
 
-                    replyModal2.show()
-
-                    // btnModify에 rno값 설정
-                    btnModify.setAttribute("data-rno", rno)
-                    btnDelete.setAttribute("data-rno", rno)
-                    
+                        // btnModify에 rno값 설정
+                        btnModify.setAttribute("data-rno", rno);
+                        btnDelete.setAttribute("data-rno", rno);
+                    }
 
 
                 }, false)
@@ -318,7 +321,7 @@
                     console.log(reply)
 
                     // 객체로 묶기
-                    const replyData = {rno, reply}
+                    const replyData = { rno, reply }
 
                     console.log(replyData)
 
@@ -332,7 +335,7 @@
                 }, false)
 
                 // 댓글 삭제
-                btnDelete.addEventListener("click", (e)=>{
+                btnDelete.addEventListener("click", (e) => {
 
                     // event 방지
                     e.preventDefault()
@@ -357,6 +360,22 @@
 
 
                 // 댓글 페이징 처리
+                replyPaging.addEventListener("click", (e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    //target 찾기
+                    const target = e.target
+                    //console.log(target)
+
+                    //paging 번호 찾기
+                    const pageNum = target.getAttribute("data-page")
+                    console.log(pageNum)
+
+                    //페이징 변경해주기
+                    getListDefault(true, pageNum)
+
+                }, false)
 
 
 

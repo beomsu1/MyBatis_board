@@ -8,8 +8,23 @@
 <!-- list -->
 <select id="boardList" parameterType="org.bs.board0.dto.BoardDTO" resultType="org.bs.board0.dto.BoardDTO">
 
-select * from tbl_board
+select * from tbl_board b
 where tno > 0
+   <if test="keyword != null and types != null">
+      <trim prefix="and (" prefixOverrides="or" suffix=")">
+        <foreach collection="types" item="type" separator=" or ">
+          <if test='type == "t"'>
+            b.title like concat('%', #{keyword}, '%')
+          </if>
+          <if test='type == "c"'>
+            b.content like concat('%', #{keyword}, '%')
+          </if>
+          <if test='type == "w"'>
+            b.writer like concat('%', #{keyword}, '%')
+          </if>
+        </foreach>
+      </trim>
+    </if>
 order by tno desc
 limit #{skip} , #{size}
 
@@ -52,8 +67,23 @@ delete from tbl_board where tno=#{tno}
 
     select count(*)
     from
-    (select tno from tbl_board
+    (select tno from tbl_board b
     where tno > 0
+       <if test="keyword != null and types != null">
+      <trim prefix="and (" prefixOverrides="or" suffix=")">
+        <foreach collection="types" item="type" separator=" or ">
+          <if test='type == "t"'>
+            b.title like concat('%', #{keyword}, '%')
+          </if>
+          <if test='type == "c"'>
+            b.content like concat('%', #{keyword}, '%')
+          </if>
+          <if test='type == "w"'>
+            b.writer like concat('%', #{keyword}, '%')
+          </if>
+        </foreach>
+      </trim>
+    </if>
     limit #{countEnd}) board
 
 </select>
