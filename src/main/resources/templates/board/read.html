@@ -64,7 +64,7 @@
                 </div>
                 <div class="mb-3 replyRegister">
                     <input type="hidden" name="tno" th:value="${boardRead.tno}">
-                    <input type="text" name="replyer" placeholder="작성자를 입력해주세요">
+                    <input type="text" name="replyer" value="beomsu" placeholder="작성자를 입력해주세요">
                     <input type="text" name="reply" class="form-control" placeholder="내용을 입력해주세요">
                 </div>
                 <div class="button_wrap">
@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <!-- 대댓글 생성 -->
+            <!-- 대댓글 생성 모달-->
             <div class="modal replyModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -94,126 +94,276 @@
                             Reply Register
                         </div>
                         <div class="modal-body replyRegister2">
-                            <input type="hidden" name="bno" th:value="${boardRead.tno}">
+                            <input type="hidden" name="tno" th:value="${boardRead.tno}">
                             <input type="hidden" name="replyer" value="beomsu">
                             <input type="text" name="reply" class="form-control">
                             <div class="replyGno"></div>
-                        </div> 
+                        </div>
                         <div class="modal-footer">
                             <button class="btn btn-primary btnRegister2">Reply Register</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
                                 Close
                             </button>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
 
-
-        </div>
-
-
-        <script layout:fragment="script" th:inline="javascript">
-
-            // 태그 객체 선언
-
-            const actionForm = document.querySelector(".acf")
-            const modify1 = document.querySelector(".modifyBtn")
-            const delete1 = document.querySelector(".deleteBtn")
-
-            // 댓글 //////////////////////////
-
-            // 등록
-            const replyRegist = document.querySelector(".replyRegister")
-            const btnRegist = document.querySelector(".btnRegister")
-            const replyWrap = document.querySelector(".replyWrap")
-
-            const replyModal = new bootstrap.Modal(document.querySelector(".replyModal"))
-            const replyRegister2 = document.querySelector(".replyRegister2")
-            const replyGno = replyRegister2.querySelector(".replyGno")
-
-            // 구조분해할당
-            const { tno } = [[${ boardRead }]]
-
-            console.log(tno)
-
-            // 수정
-            modify1.addEventListener("click", (e) => {
-
-                e.preventDefault()
-                e.stopPropagation()
-
-                actionForm.setAttribute("action", `/board/modify/${tno}`)
-                actionForm.setAttribute("method", `get`)
-                actionForm.submit()
+            <div class="modal replyModModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Reply Modify
+                        </div>
+                        <div class="modal-body replyModify">
+                            <input type="hidden" name="replyer" value="beomsu">
+                            <input type="text" name="reply" class="form-control">
+                            <div class="replyCategory"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary btnReplyModify">Reply Modify</button>
+                            <button class="btn btn-danger btnDelete">Reply Delete</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
 
-            }, false)
-
-            // 삭제
-            delete1.addEventListener("click", (e) => {
-
-                e.preventDefault()
-                e.stopPropagation()
-
-                actionForm.setAttribute("action", `/board/delete/${tno}`)
-                actionForm.setAttribute("method", `post`)
-                actionForm.submit()
+            </div>
 
 
-            }, false)
+            <script layout:fragment="script" th:inline="javascript">
 
-            // 댓글 등록
-            btnRegist.addEventListener("click", (e) => {
+                // 태그 객체 선언
 
-                e.preventDefault()
-                e.stopPropagation()
+                const actionForm = document.querySelector(".acf")
+                const modify1 = document.querySelector(".modifyBtn")
+                const delete1 = document.querySelector(".deleteBtn")
 
-                // value 값 가져오기
-                const tno = replyRegist.querySelector("input[name=tno]").value
-                const reply = replyRegist.querySelector("input[name=reply]").value
-                const replyer = replyRegist.querySelector("input[name=replyer]").value
+                // 댓글 //////////////////////////
 
-                console.log(tno, reply, replyer)
+                // 등록
+                const replyRegist = document.querySelector(".replyRegister")
+                const btnRegist = document.querySelector(".btnRegister")
+                const replyWrap = document.querySelector(".replyWrap")
 
-                // 객체로 생성
-                const replyData = { tno, reply, replyer }
+                const replyModal = new bootstrap.Modal(document.querySelector(".replyModal"))
+                const replyRegist2 = document.querySelector(".replyRegister2")
+                const replyGno = replyRegist2.querySelector(".replyGno")
+                const btnRegist2 = document.querySelector(".btnRegister2")
 
-                // axios 통신
-                replyPostRegist(replyData).then(data => {
-                    alert(data.result + "번이 등록되었습니다.")
-                    replyRegist.querySelector("input[name=reply]").value = ""
-                    getListDefault()
+                const replyModal2 = new bootstrap.Modal(document.querySelector(".replyModModal"))
+                const replyModify = document.querySelector(".replyModify")
+                const replyCategory = document.querySelector(".replyCategory")
+                const btnModify = document.querySelector(".btnReplyModify")
+                const btnDelete = document.querySelector(".btnDelete")
+
+
+                // 구조분해할당
+                const { tno } = [[${ boardRead }]]
+
+                console.log(tno)
+
+                // 수정
+                modify1.addEventListener("click", (e) => {
+
+                    // event 방지
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    actionForm.setAttribute("action", `/board/modify/${tno}`)
+                    actionForm.setAttribute("method", `get`)
+                    actionForm.submit()
+
+
                 }, false)
 
-            }, false)
+                // 삭제
+                delete1.addEventListener("click", (e) => {
 
-            // 대댓글
+                    // event 방지
+                    e.preventDefault()
+                    e.stopPropagation()
 
-
-            //대댓글 모달 보여주기
-            replyWrap.addEventListener("click", (e) => {
-
-                //event 막기
-                e.preventDefault()
-                e.stopPropagation()
-
-                //target 찾기
-                const target = e.target
-                const result = target.getAttribute("data-reply")
-                const gno = target.getAttribute("data-gno")
-                //console.log(target.getAttribute("data-reply"))
-
-                if (result === "reply") {
-                    replyModal.show()
-                    replyRegister2.querySelector("input[name=reply]").value = ""
-                    replyGno.innerHTML = `<input type="hidden" name="gno" value="${gno}">`
-                }
-            }, false)
+                    actionForm.setAttribute("action", `/board/delete/${tno}`)
+                    actionForm.setAttribute("method", `post`)
+                    actionForm.submit()
 
 
-        </script>
+                }, false)
+
+                ////////////////////// 댓글
+
+                // 댓글 등록
+                btnRegist.addEventListener("click", (e) => {
+
+                    // event 방지
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    // value 값 가져오기
+                    const tno = replyRegist.querySelector("input[name=tno]").value
+                    const reply = replyRegist.querySelector("input[name=reply]").value
+                    const replyer = replyRegist.querySelector("input[name=replyer]").value
+
+                    console.log(tno, reply, replyer)
+
+                    // 객체로 묶기
+                    const replyData = { tno, reply, replyer }
+
+                    // axios 통신
+                    replyPostRegist(replyData).then(data => {
+                        alert(data.result + "번이 등록되었습니다.")
+                        replyRegist.querySelector("input[name=reply]").value = ""
+                        getListDefault()
+                    }, false)
+
+                }, false)
+
+                ///////////////////////////////// 대댓글
+
+                //대댓글 모달 보여주기
+                replyWrap.addEventListener("click", (e) => {
+
+                    // event 방지
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    //target 찾기
+                    const target = e.target
+                    const result = target.getAttribute("data-reply")
+                    const gno = target.getAttribute("data-gno")
+                    //console.log(target.getAttribute("data-reply"))
+
+                    if (result === "reply") {
+                        replyModal.show()
+                        replyRegist2.querySelector("input[name=reply]").value = ""
+                        replyGno.innerHTML = `<input type="hidden" name="gno" value="${gno}">`
+                    }
+                }, false)
+
+                // 대댓글 생성
+                btnRegist2.addEventListener("click", (e) => {
+
+                    // event 방지
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    // value 값 가져오기
+                    const tno = replyRegist2.querySelector("input[name=tno]").value
+                    const reply = replyRegist2.querySelector("input[name=reply]").value
+                    const replyer = replyRegist2.querySelector("input[name=replyer]").value
+                    const gno = replyRegist2.querySelector("input[name=gno]").value
+
+                    // 객체로 묶기
+                    const replyData = { tno, replyer, reply, gno }
+
+                    console.log(replyData)
+
+                    // 댓글 등록 api 사용
+                    replyPostRegist(replyData).then(data => {
+                        alert(data.result + "번 댓글이 등록되었습니다.")
+                        getListDefault()
+                    })
+
+
+                }, false)
+
+
+                // 수정 모달 창
+                replyWrap.addEventListener("click", (e) => {
+
+                    // event 방지
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    // target
+                    const target = e.target
+
+                    // rno값 가져오기
+                    const rno = target.getAttribute("data-rno")
+                    console.log(rno)
+
+                    // console.log(target)
+
+                    replyModal2.show()
+
+                    // btnModify에 rno값 설정
+                    btnModify.setAttribute("data-rno", rno)
+                    btnDelete.setAttribute("data-rno", rno)
+                    
+
+
+                }, false)
+
+                // 댓글 수정
+                btnModify.addEventListener("click", (e) => {
+
+                    // event 방지
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    // target 찾기
+                    const target = e.target
+
+                    // rno값 가져오기
+                    const rno = target.getAttribute("data-rno")
+                    console.log(rno)
+
+                    const reply = replyModify.querySelector("input[name=reply]").value
+
+                    console.log(reply)
+
+                    // 객체로 묶기
+                    const replyData = {rno, reply}
+
+                    console.log(replyData)
+
+                    // 댓글 수정 api사용
+                    replyPutModify(replyData).then(data => {
+                        alert("댓글이 수정되었습니다.")
+                        getListDefault()
+                        replyModal2.hide()
+                    })
+
+                }, false)
+
+                // 댓글 삭제
+                btnDelete.addEventListener("click", (e)=>{
+
+                    // event 방지
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    // target
+                    const target = e.target
+
+                    // rno 값 찾기
+                    const rno = target.getAttribute("data-rno")
+                    console.log(rno)
+
+                    // 댓글 삭제 api 사용
+                    replyDelete(rno).then(data => {
+                        alert("삭제되었습니다.")
+                        getListDefault()
+                        replyModal2.hide()
+                    })
+
+
+                }, false)
+
+
+                // 댓글 페이징 처리
+
+
+
+                // 댓글 list 불러오기
+                getListDefault()
+
+            </script>
 
 </body>
 

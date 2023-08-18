@@ -24,15 +24,15 @@ const replyGetRead = async(rno) => {
 }
 
 // modify
-const replyPutModify = async(reply) => {
-    const res = await axios.put(`${url}/modify/${reply.rno}`, reply)
+const replyPutModify = async(replyData) => {
+    const res = await axios.put(`${url}modify/${replyData.rno}`, replyData)
     return res.data
 }
 
 
 // delete
 const replyDelete = async(rno) => {
-    const res = await axios.delete(`${url}/delete/${rno}`)
+    const res = await axios.delete(`${url}delete/${rno}`)
     return res.data
 }
 
