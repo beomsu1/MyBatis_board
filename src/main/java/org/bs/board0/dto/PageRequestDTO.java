@@ -69,37 +69,58 @@ public class PageRequestDTO {
 
     }
 
+    // type 배열로 반환 처리
+    public String[] getTypes() {
+
+        // 만약 type이 null이거나 비어있다면 null을 반환
+        if (this.type == null || this.type.isEmpty()) {
+            return null;
+        }
+
+        // type 문자열을 빈 문자열("")을 기준으로 나누어 배열로 반환
+        return this.type.split("");
+    }
+
     // link
     public String getLink() {
 
         if (link == null) {
-            // 문자열 합치기
+
+            // 새로운 문자열 생성하기 위해 strBuiler 객체 생성
             StringBuilder strBuilder = new StringBuilder();
 
-            // 페이지,사이즈 append
+            // 페이지,사이즈 append -> 페이지,사이즈를 문자열 형태로 strBuilder에 추가
             strBuilder.append("page=" + this.page);
             strBuilder.append("&size=" + this.size);
 
             // 검색타입
             if (type != null && type.length() > 0) {
+                
+                // 검색타입을 strBuilder에 추가
                 strBuilder.append("&type=" + this.type);
             }
 
             // 검색어
             if (keyword != null) {
                 try {
+
+                    // 키워드를 strBuilder에 추가. 
+                    // 검색어는 URL 인코딩을 해야하기에 URLEncoder.encode()를 사용하여 인코딩된 문자열로 변환
                     strBuilder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
+
+                    // 예외 처리
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             }
 
-            // toString으로 String전달
+            // 모든조건 추가한 후 strBuilder의 내용을 문자열로 변환 후 link에 저장
             link = strBuilder.toString();
         }
 
+        // link 반환
         return link;
-        
+
     }
 
 }
