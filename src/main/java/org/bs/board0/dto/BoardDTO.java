@@ -1,6 +1,7 @@
 package org.bs.board0.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,7 @@ public class BoardDTO {
     private LocalDate regDate;
 
     private LocalDate updateDate;
+
+    private List<String> fnames; //파일업로드 파일명저장
     
 }
