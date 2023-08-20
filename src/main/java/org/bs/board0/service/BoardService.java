@@ -13,7 +13,7 @@ public interface BoardService {
         PageResponseDTO<BoardDTO> boardList(PageRequestDTO pageRequestDTO);
 
         // insert
-        int boardInsert(BoardDTO boardDTO);
+        void boardInsert(BoardDTO boardDTO);
     
         // read
         BoardDTO boardRead(Long tno);

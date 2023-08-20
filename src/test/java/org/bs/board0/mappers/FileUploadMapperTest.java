@@ -81,4 +81,14 @@ public class FileUploadMapperTest {
         }
     }
 
+
+    // delete
+    @Test
+    @Transactional
+    @Commit
+    public void testDeleteImage(){
+
+        fileUploadMapper.deleteImages(1310705);
+    }
+
 }

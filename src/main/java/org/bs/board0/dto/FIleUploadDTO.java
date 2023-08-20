@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FIleUploadDTO {
+public class FileUploadDTO {
 
     private int imgno; // pk - 이미지 번호
     private String uuid; // uuid

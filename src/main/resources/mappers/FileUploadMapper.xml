@@ -13,5 +13,9 @@ insert into tbl_board_img (tno, fname, ord, uuid) values
 </foreach>
 </insert>
 
+<!-- delete -->
+<delete id="deleteImages">
+delete from tbl_board_img where tno=#{tno}
+</delete>
 
 </mapper>
