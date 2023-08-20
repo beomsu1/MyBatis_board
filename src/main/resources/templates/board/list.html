@@ -97,7 +97,8 @@
     <script layout:fragment="script" th:inline="javascript">
 
         // 태그 객체 생성
-        const actionForm = document.querySelector(".acf")
+        const actionForm = document.querySelector(".actionForm")
+        const actionForm2 = document.querySelector(".acf")
         const listTable = document.querySelector(".listTable")
         const paging = document.querySelector(".paging")
         const pageObj = document.querySelector("input[name=page]")
@@ -153,9 +154,9 @@
 
             console.log(tno)
 
-            actionForm.setAttribute("action", `/board/read/${tno}`)
-            actionForm.setAttribute("method", `get`)
-            actionForm.submit()
+            actionForm2.setAttribute("action", `/board/read/${tno}`)
+            actionForm2.setAttribute("method", `get`)
+            actionForm2.submit()
 
 
         }, false)
