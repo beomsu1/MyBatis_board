@@ -148,5 +148,6 @@ public class FileuploadController {
 
         // JSON 데이터로 반환
         return Map.of("result", "success");
+        
     }
 }
