@@ -142,7 +142,7 @@ public class FileuploadController {
             originFile.delete();
 
         } catch (IOException e) {
-            // TODO: handle exception
+            
             e.printStackTrace();
         }
 
