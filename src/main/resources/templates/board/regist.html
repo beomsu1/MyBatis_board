@@ -13,7 +13,7 @@
         <div class="col-sm-12 col-xl-12">
             <div class="bg-light rounded h-100 p-4">
                 <h2 class="mb-4">게시판 등록</h2>
-                <form method="post" action="/board/regist" class="actionForm" name="acf">
+                <form method="post" action="/board/regist" class="actionForm">
                     <div class="mb-3">
                         <label for="boardTitle" class="form-label">제목</label>
                         <input type="text" name="title" class="form-control" id="boardTitle">
@@ -28,7 +28,7 @@
                     </div>
 
                     <!-- 파일업로드 -->
-                    <input class="uploadInput" type="file" multiple>
+                    <input class="uploadInput" type="file" name="upload" multiple>
                     <button class="uploadBtn">UPLOAD</button>
 
                     <!-- 파일 업로드 사진 출력 -->
@@ -40,13 +40,8 @@
                         <button type="submit" class="btn btn-primary reigstBtn">등록</button>
                         <a href="/board/list" class="btn btn-danger">취소</a>
                     </div>
+                    
                 </form>
-
-                <br>
-
-
-
-
             </div>
         </div>
     </div>
@@ -87,7 +82,7 @@
             console.dir(formData)
 
             // 헤더 생성- 헤더는 multipart/form-data 형식 (파일 업로드)
-            const header = {headers: {"Content-Type": "multipart/form-data"}}
+            const header = { headers: { "Content-Type": "multipart/form-data" } }
 
             // 비동기
             axios.post("http://localhost:8080/api/files/upload", formData, header).then(res => {
@@ -150,7 +145,6 @@
 
         // registBtn
         // 등록 버튼 눌렀을 시 파일 업로드 된 데이터까지 같이 전송
-
         reigstBtn.addEventListener("click", (e) => {
 
             // 이벤트 방지
@@ -160,10 +154,12 @@
             // li 태그 모두 찾아서 liArr 이라는 변수에 저장
             const liArr = uploadUL.querySelectorAll("li")
 
+            console.log(liArr)
+
             let str = ''
 
             // 반복문 돌려서 fnames에 파일 저장
-            for (const liObj of liArr) {
+            for (let liObj of liArr) {
 
                 const uuid = liObj.getAttribute("data-uuid")
                 const fname = liObj.getAttribute("data-fname")
@@ -174,8 +170,7 @@
             // actionForm에 str을 저장
             actionForm.innerHTML += str
 
-            // 등록 버튼을 클릭한 경우, 해당 form을 서버로 제출
-            actionForm.submit();
+            console.log(actionForm)
 
         }, false)
 
