@@ -72,10 +72,7 @@ const getListDefault = (replyLast, page) => {
       }
   
       nextBtn === true ? replyPagingStr += `<li><button data-page="${endNum + 1} class="btn btn-primary">></button></li>` : ""
-  
-      //console.log(replyLast = Math.ceil((page * size) / total) === 1 ? true : false)
-      //console.log(replyStr)
-      //console.log(replyPagingStr)
+
       replyWrap.innerHTML = replyStr
       replyPaging.innerHTML = replyPagingStr
     })

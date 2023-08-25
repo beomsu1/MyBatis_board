@@ -29,7 +29,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class FileuploadController {
     
 
-    // uploadPath 변수에 "org.zerock.upload.path"라는 프로퍼티의 값을 주입하는 역할
+    // uploadPath 변수에 "org.bs.upload.path"라는 프로퍼티의 값을 주입하는 역할
     @Value("${org.bs.upload.path}")
     private String uploadPath;
 
