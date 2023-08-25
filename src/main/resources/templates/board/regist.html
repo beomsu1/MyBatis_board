@@ -27,21 +27,23 @@
                         <input type="text" name="writer" class="form-control" id="boardWriter">
                     </div>
 
-                    <!-- 파일업로드 -->
-                    <input class="uploadInput" type="file" name="upload" multiple>
-                    <button class="uploadBtn">UPLOAD</button>
-
-                    <!-- 파일 업로드 사진 출력 -->
-                    <ul class="uploadUL">
-
-                    </ul>
-
                     <div class="button_wrap">
                         <button type="submit" class="btn btn-primary reigstBtn">등록</button>
                         <a href="/board/list" class="btn btn-danger">취소</a>
                     </div>
-                    
+
                 </form>
+
+                <br>
+
+                <!-- 파일업로드 -->
+                <input class="uploadInput" type="file" name="upload" multiple>
+                <button class="uploadBtn">UPLOAD</button>
+
+                <!-- 파일 업로드 사진 출력 -->
+                <ul class="uploadUL">
+
+                </ul>
             </div>
         </div>
     </div>
@@ -146,35 +148,35 @@
         // registBtn
         // 등록 버튼 눌렀을 시 파일 업로드 된 데이터까지 같이 전송
         reigstBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-            // 이벤트 방지
-            e.preventDefault()
-            e.stopPropagation()
+            // li 태그 모두 찾아서 liArr 변수에 저장
+            const liArr = uploadUL.querySelectorAll("li");
 
-            // li 태그 모두 찾아서 liArr 이라는 변수에 저장
-            const liArr = uploadUL.querySelectorAll("li")
-
-            console.log(liArr)
-
-            let str = ''
+            // fnames 배열 생성
+            const fnames = [];
 
             // 반복문 돌려서 fnames에 파일 저장
             for (let liObj of liArr) {
-
-                const uuid = liObj.getAttribute("data-uuid")
-                const fname = liObj.getAttribute("data-fname")
-                console.log(uuid, fname)
-                str += `<input type="hidden" name="fnames" value="${uuid}_${fname}">`
+                const uuid = liObj.getAttribute("data-uuid");
+                const fname = liObj.getAttribute("data-fname");
+                console.log(uuid, fname);
+                fnames.push(`${uuid}_${fname}`);
             }
 
-            // actionForm에 str을 저장
-            actionForm.innerHTML += str
+            // fnames 값을 hidden input으로 추가
+            const hiddenFnames = document.createElement("input");
+            hiddenFnames.type = "hidden";
+            hiddenFnames.name = "fnames";
+            hiddenFnames.value = fnames.join(',');
+            actionForm.appendChild(hiddenFnames);
 
-            console.log(actionForm)
+            // Form 제출
+            actionForm.submit();
+        }, false);
 
-            actionForm.submit(); 
 
-        }, false)
 
 
     </script>

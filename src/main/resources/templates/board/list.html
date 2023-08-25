@@ -68,8 +68,6 @@
                                 <br>
                                 <div>
                                     <form class="acf" action="/board/regist" method="get">
-                                        <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
-                                        <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
                                         <a href="/board/regist" class="btn btn-primary">등록</a>
                                     </form>
                                 </div>
@@ -98,7 +96,6 @@
 
         // 태그 객체 생성
         const actionForm = document.querySelector(".actionForm")
-        const actionForm2 = document.querySelector(".acf")
         const listTable = document.querySelector(".listTable")
         const paging = document.querySelector(".paging")
         const pageObj = document.querySelector("input[name=page]")
@@ -154,9 +151,9 @@
 
             console.log(tno)
 
-            actionForm2.setAttribute("action", `/board/read/${tno}`)
-            actionForm2.setAttribute("method", `get`)
-            actionForm2.submit()
+            actionForm.setAttribute("action", `/board/read/${tno}`)
+            actionForm.setAttribute("method", `get`)
+            actionForm.submit()
 
 
         }, false)

@@ -45,7 +45,7 @@ public class BoardController {
 
     // post Regist
     @PostMapping("regist")
-    public String postRegist(@RequestBody BoardDTO boardDTO){
+    public String postRegist(BoardDTO boardDTO){
 
         log.info(boardDTO+"boardDTO");
 
