@@ -47,7 +47,7 @@ public class BoardMapperTest {
     @Test
     public void boardReadTest(){
 
-        BoardDTO boardDTO = boardMapper.boardRead(2048L);
+        BoardDTO boardDTO = boardMapper.boardRead(1310722L);
 
         log.info(boardDTO);
 

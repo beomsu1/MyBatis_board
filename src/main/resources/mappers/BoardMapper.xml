@@ -5,11 +5,29 @@
 
 <mapper namespace="org.bs.board0.mappers.BoardMapper">
 
-<!-- list -->
-<select id="boardList" parameterType="org.bs.board0.dto.BoardDTO" resultType="org.bs.board0.dto.BoardDTO">
+  <!-- - file (resultMap) -->
+  <resultMap id="fileListMap" type="org.bs.board0.dto.BoardDTO">
+      <id property="tno" column="tno"/>
+      <result property="title" column="title"/>
+      <result property="content" column="content"/>
+      <result property="writer" column="writer"/>
+      <result property="regDate" column="regDate"/>
+      <result property="updateDate" column="updateDate"/>
+      <collection property="fnames" resultMap="fileMap"/>
+  </resultMap>
 
-select * from tbl_board b
-where tno > 0
+  <resultMap id="fileMap" type="string">
+      <result property="fnames" column="fnames"/>
+  </resultMap>
+  <!-- file (resultMap) -->
+
+<!-- list -->
+<select id="boardList" resultMap="fileListMap">
+
+select b.tno, b.title, b.content, b.writer, b.regDate, concat(bi.uuid, "_", bi.fname) as fnames
+from tbl_board b 
+left outer join tbl_board_img bi on b.tno = bi.tno and bi.ord= 0
+where b.tno > 0
    <if test="keyword != null and types != null">
       <trim prefix="and (" prefixOverrides="or" suffix=")">
         <foreach collection="types" item="type" separator=" or ">
@@ -25,7 +43,7 @@ where tno > 0
         </foreach>
       </trim>
     </if>
-order by tno desc
+order by b.tno desc
 limit #{skip} , #{size}
 
 </select>
@@ -41,10 +59,12 @@ insert into tbl_board (title,content,writer) value (#{title},#{content},#{writer
 </insert>
 
 <!-- read -->
-<select id="boardRead" resultType="org.bs.board0.dto.BoardDTO">
+<select id="boardRead" resultMap="fileListMap">
 
-select * from tbl_board
-where tno = #{tno}
+select b.tno, b.title, b.content, b.writer, b.regDate, b.updateDate, concat(bi.uuid, "_", bi.fname) as fnames
+from tbl_board b 
+left outer join tbl_board_img bi on b.tno = bi.tno
+where b.tno = #{tno}
 
 </select>
 
@@ -89,4 +109,4 @@ delete from tbl_board where tno=#{tno}
 </select>
 
 
-</mapper>
+</mapper> 

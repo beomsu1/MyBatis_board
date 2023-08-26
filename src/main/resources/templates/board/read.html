@@ -19,6 +19,16 @@
                         <input type="text" class="form-control" id="boardTno" th:value="${boardRead.tno}" readonly>
                     </div>
                     <div class="mb-3">
+                        <label for="boardWriter" class="form-label">작성자</label>
+                        <input type="text" class="form-control" id="boardWriter" th:value="${boardRead.writer}"
+                            readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardTitle" class="form-label">수정일</label>
+                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.updateDate}"
+                            readonly>
+                    </div>
+                    <div class="mb-3">
                         <label for="boardTitle" class="form-label">제목</label>
                         <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.title}" readonly>
                     </div>
@@ -27,25 +37,24 @@
                         <input type="text" class="form-control" id="boardContent" th:value="${boardRead.content}"
                             readonly>
                     </div>
-                    <div class="mb-3">
-                        <label for="boardWriter" class="form-label">작성자</label>
-                        <input type="text" class="form-control" id="boardWriter" th:value="${boardRead.writer}"
-                            readonly>
+
+                    <!-- fnames가 존재할 때 활성화 -->
+                    <div th:if="${not #lists.isEmpty(boardRead.fnames)}">
+                        <div class="mb-3">
+                            <label for="fnames" class="form-label">첨부 파일</label>
+                            <table>
+                                <tr>
+                                    <td th:each="fname : ${boardRead.fnames}">
+                                        <img th:src="@{|http://localhost/${fname}|}" width="300">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="boardTitle" class="form-label">작성일</label>
-                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.regDate}"
-                            readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="boardTitle" class="form-label">수정일</label>
-                        <input type="text" class="form-control" id="boardTitle" th:value="${boardRead.updateDate}"
-                            readonly>
-                    </div>
+
                     <div class="button_wrap">
                         <button class="btn btn-primary modifyBtn">수정</button>
-                        <button class="btn btn-primary deleteBtn">삭제</button>
-                        <a href="/board/list" class="btn btn-danger">목록</a>
+                        <a href="/board/list" class="btn btn-secondary">목록</a>
                     </div>
                 </form>
 
@@ -182,20 +191,6 @@
 
                 }, false)
 
-                // 삭제
-                delete1.addEventListener("click", (e) => {
-
-                    // event 방지
-                    e.preventDefault()
-                    e.stopPropagation()
-
-                    actionForm.setAttribute("action", `/board/delete/${tno}`)
-                    actionForm.setAttribute("method", `post`)
-                    actionForm.submit()
-
-
-                }, false)
-
                 ////////////////////// 댓글
 
                 // 댓글 등록
@@ -268,6 +263,7 @@
                     replyPostRegist(replyData).then(data => {
                         alert(data.result + "번 댓글이 등록되었습니다.")
                         getListDefault()
+                        replyModal.hide()
                     })
 
 
@@ -287,7 +283,7 @@
 
                     // modify 버튼을 눌렀을 때만 모달을 띄움
                     if (target.getAttribute("data-reply") === "modify") {
-                        
+
                         // rno값 가져오기
                         const rno = target.getAttribute("data-rno");
                         console.log(rno);
