@@ -47,7 +47,7 @@
                                 </div>
                                 <!-- 검색 -->
 
-                                <table id="example2" class="table table-bordered table-hover listTable">
+                                <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>번호</th>
@@ -56,12 +56,12 @@
                                             <th>등록일</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="listTable">
                                         <tr th:each="list : ${boardList.list}">
                                             <td th:text="${list.tno}" th:data-tno="${list.tno}"></td>
-                                            <td>
-                                                <span th:text="${list.title}" th:data-tno="${list.tno}"></span>
-                                                <span th:unless="${#lists.isEmpty(list.fnames)}">
+                                            <td th:data-tno="${list.tno}">
+                                                <span th:text="${list.title}"></span>
+                                                <span th:unless="${#lists.isEmpty(list.fnames)}" >
                                                     <img th:src="@{/image/image.png}" width="15">
                                                 </span>
                                             </td>
