@@ -59,13 +59,13 @@
                                     <tbody class="listTable">
                                         <tr th:each="list : ${boardList.list}">
                                             <td th:text="${list.tno}" th:data-tno="${list.tno}"></td>
-                                            <td th:data-tno="${list.tno}">
-                                                <span th:text="${list.title}"></span>
-                                                <span th:unless="${#lists.isEmpty(list.fnames)}" >
-                                                    <img th:src="@{/image/image.png}" width="15">
+                                            <td >
+                                                <span th:text="${list.title}" th:data-tno="${list.tno}"></span>
+                                                <span th:unless="${#lists.isEmpty(list.fnames)}" th:data-tno="${list.tno}">
+                                                    <img th:src="@{/image/image.png}" width="18" th:data-tno="${list.tno}">
                                                 </span>
                                             </td>
-                                                                                  
+
                                             <td th:text="${list.writer}" th:data-tno="${list.tno}"></td>
                                             <td th:text="${list.regDate}" th:data-tno="${list.tno}"></td>
                                         </tr>
