@@ -27,6 +27,15 @@
                         <input type="text" name="writer" class="form-control" id="boardWriter">
                     </div>
 
+                    <!-- 파일업로드 -->
+                    <input class="uploadInput" type="file" name="upload" multiple>
+                    <button class="uploadBtn">UPLOAD</button>
+
+                    <!-- 파일 업로드 사진 출력 -->
+                    <ul class="uploadUL">
+
+                    </ul>
+
                     <div class="button_wrap">
                         <button type="submit" class="btn btn-primary reigstBtn">등록</button>
                         <a href="/board/list" class="btn btn-danger">취소</a>
@@ -34,16 +43,6 @@
 
                 </form>
 
-                <br>
-
-                <!-- 파일업로드 -->
-                <input class="uploadInput" type="file" name="upload" multiple>
-                <button class="uploadBtn">UPLOAD</button>
-
-                <!-- 파일 업로드 사진 출력 -->
-                <ul class="uploadUL">
-
-                </ul>
             </div>
         </div>
     </div>
