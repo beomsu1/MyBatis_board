@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read</title>
+    <title>Modify</title>
 </head>
 
 <body>
@@ -35,15 +35,20 @@
                             th:value="${boardModify.content}">
                     </div>
 
-                     <!-- fnames가 존재할 때 활성화 -->
-                     <div th:if="${not #lists.isEmpty(boardModify.fnames)}">
+                    <!-- fnames가 존재할 때 활성화 -->
+                    <div th:if="${not #lists.isEmpty(boardModify.fnames)}">
                         <div class="mb-3">
                             <label for="fnames" class="form-label">첨부 파일</label>
                             <table>
                                 <tr>
                                     <td th:each="fname : ${boardModify.fnames}">
-                                        <img th:src="@{|http://localhost/${fname}|}" width="200">
+                                        <div style="display: flex; flex-direction: column; align-items: center;"
+                                            class="imgBox">
+                                            <img th:src="@{|http://localhost/${fname}|}" width="200">
+                                            <button style="margin-top: 15px" class="btn btn-danger imgDelete">X</button>
+                                        </div>
                                     </td>
+
                                 </tr>
                             </table>
                         </div>
@@ -66,6 +71,10 @@
             const modify1 = document.querySelector(".modifyBtn")
             const return1 = document.querySelector(".returnBtn")
             const btnDelete = document.querySelector(".btnDelete")
+
+            /////////////////////// 파일 업로드
+            const imgBox = document.querySelector(".imgBox")
+            const imgDelete = document.querySelector(".imgDelete")
 
             const { tno } = [[${ boardModify }]]
 
@@ -96,6 +105,30 @@
 
 
             }, false)
+
+            ////////////////////////// 파일 업로드
+
+            // 이미지 삭제
+            const imgDeleteButtons = document.querySelectorAll(".imgDelete");
+
+            imgDeleteButtons.forEach(imgDelete => {
+                imgDelete.addEventListener("click", (e) => {
+                    // 이벤트 방지
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const imgBox = imgDelete.parentElement;
+                    const img = imgBox.querySelector("img");
+                    const fname = img.getAttribute("src").split("/").pop();
+
+                    console.log(fname);
+
+                    // 비동기
+                    axios.delete(`http://localhost:8080/api/files/remove/${fname}`)
+                    imgBox.remove()
+
+                }, false);
+            });
 
 
         </script>
