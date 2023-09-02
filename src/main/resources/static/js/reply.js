@@ -1,5 +1,6 @@
 /* 댓글 비동기 통신 */
 
+// localhost 정의
 const url = `http://localhost:8080/api/replies/`
 
 // list
@@ -8,8 +9,6 @@ const replyGetList = async(replyLast = false, page = 1) => {
     const res = await axios.get(`${url}${tno}/list?page=${page}&replyLast=${replyLast}`)
     return res.data
   }
-
-
 
 // regist
 const replyPostRegist = async(replyData) => {
