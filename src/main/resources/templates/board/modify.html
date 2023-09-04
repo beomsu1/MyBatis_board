@@ -13,7 +13,7 @@
         <div class="col-sm-12 col-xl-12">
             <div class="bg-light rounded h-100 p-4">
                 <h2 class="mb-4">게시판 수정</h2>
-                <form method="get" action="/board/delete/" class="acf">
+                <form method="post" action="/board/modify" class="acf">
                     <div class="mb-3">
                         <label for="boardTitle" class="form-label">번호</label>
                         <input type="text" name="tno" class="form-control" id="boardTno" th:value="${boardModify.tno}"
@@ -35,24 +35,39 @@
                             th:value="${boardModify.content}">
                     </div>
 
-                    <!-- fnames가 존재할 때 활성화 -->
-                    <div th:if="${not #lists.isEmpty(boardModify.fnames)}">
-                        <div class="mb-3">
-                            <label for="fnames" class="form-label">첨부 파일</label>
-                            <table>
-                                <tr>
-                                    <td th:each="fname : ${boardModify.fnames}">
-                                        <div style="display: flex; flex-direction: column; align-items: center;"
-                                            class="imgBox">
-                                            <img th:src="@{|http://localhost/${fname}|}" width="200">
-                                            <button style="margin-top: 15px" class="btn btn-danger imgDelete">X</button>
-                                        </div>
-                                    </td>
+                    <!-- 파일업로드 -->
+                    <input class="uploadInput" type="file" name="upload" multiple>
+                    <button class="uploadBtn">UPLOAD</button>
 
-                                </tr>
-                            </table>
+                    <br>
+                    <br>
+
+                    <!-- 파일 업로드 사진 출력 -->
+                    <ul class="uploadUL">
+
+                        <!-- fnames가 존재할 때 활성화 -->
+                        <div th:if="${not #lists.isEmpty(boardModify.fnames)}">
+                            <div class="mb-3">
+                                <label for="fnames" class="form-label">첨부 파일</label>
+                                <table>
+                                    <tr>
+                                        <td th:each="fname : ${boardModify.fnames}">
+                                            <li style="display: flex; flex-direction: column; align-items: center;"
+                                                class="imgBox">
+                                                <img th:src="@{|http://localhost/${fname}|}" width="200">
+                                                <button style="margin-top: 15px"
+                                                    class="btn btn-danger imgDelete">X</button>
+                                            </li>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+
+                    </ul>
+
+
 
                     <div class="button_wrap">
                         <button class="btn btn-primary modifyBtn">수정</button>
@@ -73,24 +88,27 @@
             const btnDelete = document.querySelector(".btnDelete")
 
             /////////////////////// 파일 업로드
-            const imgBox = document.querySelector(".imgBox")
+            const uploadUL = document.querySelector(".uploadUL")
             const imgDelete = document.querySelector(".imgDelete")
+            const imgBox = document.querySelector(".imgBox")
+            const uploadBtn = document.querySelector(".uploadBtn")
+            const uploadInput = document.querySelector(".uploadInput")
 
             const { tno } = [[${ boardModify }]]
 
             console.log(tno)
 
-            // 수정
-            modify1.addEventListener("click", (e) => {
+            // // 수정
+            // modify1.addEventListener("click", (e) => {
 
-                e.preventDefault()
-                e.stopPropagation()
+            //     e.preventDefault()
+            //     e.stopPropagation()
 
-                actionForm.setAttribute("action", "/board/modify")
-                actionForm.setAttribute("method", "post")
-                actionForm.submit()
+            //     actionForm.setAttribute("action", "/board/modify")
+            //     actionForm.setAttribute("method", "post")
+            //     actionForm.submit()
 
-            }, false)
+            // }, false)
 
             // 삭제
             btnDelete.addEventListener("click", (e) => {
@@ -108,7 +126,75 @@
 
             /////////////////////////////////////////// 파일 업로드
 
-            // 이미지 삭제
+            // show images - uploadUL 에 이미지 출력
+            const showImages = (arr) => {
+
+                let str = ''
+
+                // 반복문을 돌려서 필요한 값 추출
+                for (const uploadFile of arr) {
+
+                    // 구조 분해 할당
+                    const { fname, link, uuid } = uploadFile
+
+                    str += `
+                        <br>
+                        <li data-uuid='${uuid}' data-fname='${fname}'>
+                            <div>
+                                <a href='http://localhost/${uuid}_${fname}' target="_blank">
+                                <img src='http://localhost/${link}'/>
+                                </a>
+                                <p>${fname} <button class="btn btn-danger" onclick="javascript:removeImage(event, '${uuid}', '${fname}')">x</button></p>
+                            <div>   
+                        </li>`
+                }
+
+                // str을 대입
+                uploadUL.innerHTML += str
+            }
+
+            // UPLOAD 버튼 클릭 시
+            uploadBtn.addEventListener("click", (e) => {
+
+                e.preventDefault()
+                e.stopPropagation()
+
+                console.dir(uploadInput.files)
+
+                // 파일이 없을 시 return
+                if (!uploadInput.files || uploadInput.files.length === 0) {
+                    return
+                }
+
+                // 폼데이터 생성
+                const formData = new FormData()
+
+                // 반복문 돌려서 formData에 값 대입
+                for (let i = 0; i < uploadInput.files.length; i++) {
+
+                    // formData에 uploadInput.files[i] 의 값들을 추가
+                    formData.append("files", uploadInput.files[i])
+
+                }
+
+                console.dir(formData)
+
+                // 헤더 생성- 헤더는 multipart/form-data 형식 (파일 업로드)
+                const header = { headers: { "Content-Type": "multipart/form-data" } }
+
+                // 비동기
+                axios.post("http://localhost:8080/api/files/upload", formData, header).then(res => {
+                    const result = res.data
+                    console.log(result)
+                    showImages(result)
+
+                    // 파일 추가 후 비우기
+                    uploadInput.value = ''
+                })
+
+            }, false)
+
+            // X 버튼 클릭 (이미지 삭제)
             const imgDeleteButtons = document.querySelectorAll(".imgDelete");
 
             imgDeleteButtons.forEach(imgDelete => {
@@ -127,9 +213,47 @@
                     axios.delete(`http://localhost:8080/api/files/remove/${fname}`)
                     imgBox.remove()
 
-                }, false);
-                
-            });
+
+                }, false)
+
+            })
+
+            // 수정 버튼 눌렀을 시 파일 업로드 된 데이터까지 같이 전송
+            modify1.addEventListener("click", (e) => {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                // li 태그 모두 찾아서 liArr 변수에 저장
+                const liArr = uploadUL.querySelectorAll("li");
+
+                // fnames 배열 생성
+                const fnames = [];
+
+                // 반복문 돌려서 fnames에 파일 저장
+                for (let liObj of liArr) {
+                    const uuid = liObj.getAttribute("data-uuid");
+                    const fname = liObj.getAttribute("data-fname");
+                    console.log(uuid, fname);
+                    fnames.push(`${uuid}_${fname}`);
+                }
+
+                // fnames 값을 hidden input으로 추가
+                const hiddenFnames = document.createElement("input");
+                hiddenFnames.type = "hidden";
+                hiddenFnames.name = "fnames";
+                hiddenFnames.value = fnames.join(',');
+                actionForm.appendChild(hiddenFnames);
+
+                // Form 제출
+                actionForm.setAttribute("action", `/board/modify`)
+                actionForm.setAttribute("method", "post")
+
+                actionForm.submit();
+            }, false);
+
+
+
 
 
         </script>
