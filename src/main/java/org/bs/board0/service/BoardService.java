@@ -19,7 +19,7 @@ public interface BoardService {
         BoardDTO boardRead(Long tno);
     
         // update
-        int boardUpdate(BoardDTO boardDTO);
+        void boardUpdate(BoardDTO boardDTO);
     
         // delete
         int boardDelete(Long tno);

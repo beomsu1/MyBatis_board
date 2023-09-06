@@ -12,6 +12,6 @@ public interface FileUploadMapper {
     int insertImages(List<Map<String,String>> imageList);
 
     // delete
-    int deleteImages(int tno);
+    int deleteImages(Long tno);
     
 }
