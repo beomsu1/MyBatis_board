@@ -5,6 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
+import org.bs.board0.dto.MemberReadDTO;
 import org.bs.board0.dto.MemberRegistDTO;
 import org.bs.board0.dto.MemberRoleRegistDTO;
 import org.bs.board0.mappers.MemberMapper;
@@ -45,7 +46,17 @@ public class MemberMapperTest {
 
         log.info("Member Regist finish");
 
+    }
 
+    // memberselect
+    @Test
+    public void memberSelectTest(){
+
+        String email = "beomsu_1221@naver.com";
+
+        MemberReadDTO result = memberMapper.memberSelect(email);
+
+        log.info(result);
     }
 
 }

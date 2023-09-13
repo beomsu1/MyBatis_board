@@ -15,5 +15,26 @@ insert into tbl_member (email, mpw, mname) values (#{email}, #{mpw}, #{mname})
 insert into tbl_member_role (email, rolename) values (#{email}, #{rolename})
 </insert>
 
+<!-- resultMap -->
+<resultMap id="memberMap" type="org.bs.board0.dto.MemberReadDTO">
+
+<id property="email" column="email"/>
+<result property="mpw" column="mpw"/>
+<result property="mname" column="mname"/>
+<collection property="rolenames" resultMap="authMap"/>
+</resultMap>
+
+<resultMap type="string" id="authMap">
+<result column="rolename"/>
+</resultMap>
+
+<!-- memberSelect -->
+<select id="memberSelect" resultMap="memberMap">
+
+select * from tbl_member tm left outer join tbl_member_role tmr on tm.email = tmr.email
+where tm.email = #{email}
+
+</select>
+
 
 </mapper>

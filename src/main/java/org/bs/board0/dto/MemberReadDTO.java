@@ -16,6 +16,6 @@ public class MemberReadDTO {
     private String email;
     private String mpw;
     private String mname;
-    private List<String> roleNames;
+    private List<String> rolenames;
     
 }

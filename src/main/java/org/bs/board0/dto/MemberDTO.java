@@ -17,9 +17,9 @@ public class MemberDTO extends User {
     private String mname;
 
     // 생성자 생성 - 항상 부모클래스의 생성자를 호출 해야함
-    public MemberDTO(String email, String mpw, String mname, List<String> roleNames) {
+    public MemberDTO(String email, String mpw, String mname, List<String> rolenames) {
         super(email, mpw,
-                roleNames.stream().map(str -> new SimpleGrantedAuthority("ROLE_" + str)).collect(Collectors.toList()));
+                rolenames.stream().map(str -> new SimpleGrantedAuthority("ROLE_" + str)).collect(Collectors.toList()));
 
         this.mname = mname;
     }

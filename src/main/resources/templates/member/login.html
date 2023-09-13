@@ -138,9 +138,9 @@
                 <button>create</button>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
-            <form class="login-form">
-                <input type="text" placeholder="username" />
-                <input type="password" placeholder="password" />
+            <form action="/member/login" method="post">
+                <input type="text" name="username" placeholder="username" />
+                <input type="password" name="password" placeholder="password" />
                 <button>login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>
@@ -149,10 +149,6 @@
 
 </body>
 
-<script layout:fragment="script" th:inline="javascript">
-    $('.message a').click(function () {
-        $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
-    });
-</script>
+
 
 </html>
