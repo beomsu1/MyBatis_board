@@ -5,12 +5,13 @@ import org.bs.board0.dto.BoardDTO;
 import org.bs.board0.dto.PageRequestDTO;
 import org.bs.board0.dto.PageResponseDTO;
 import org.bs.board0.service.BoardService;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,14 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/board/")
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class BoardController {
 
     private final BoardService boardService; 
     
     // list
     @GetMapping("list")
+    @PreAuthorize("hasRole('USER')")
     public void getList(PageRequestDTO pageRequestDTO, Model model){
 
         log.info("get List...");
