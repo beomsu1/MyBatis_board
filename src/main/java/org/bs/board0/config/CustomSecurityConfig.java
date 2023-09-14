@@ -9,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -67,6 +66,9 @@ public class CustomSecurityConfig {
         
         // 자동 로그인
         http.rememberMe(config ->{
+
+            // remeberMe 기능을 사용하기 위해 persistentTokenRepository 설정
+            config.tokenRepository(persistentTokenRepository());
 
             // 토근 시간 설정
             config.tokenValiditySeconds(60*60);
