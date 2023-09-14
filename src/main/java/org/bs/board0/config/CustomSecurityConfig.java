@@ -2,6 +2,7 @@ package org.bs.board0.config;
 
 import javax.sql.DataSource;
 
+import org.bs.board0.security.handler.CustomAccessDeniedHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -76,6 +77,11 @@ public class CustomSecurityConfig {
             // 토근 시간 설정
             config.tokenValiditySeconds(60*60);
 
+        });
+
+        // AccessDeniedHandler 설정
+        http.exceptionHandling(config ->{
+            config.accessDeniedHandler(new CustomAccessDeniedHandler());
         });
 
         return http.build();
