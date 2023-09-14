@@ -1,0 +1,77 @@
+-- board --
+create table tbl_board (
+	tno int auto_increment primary key,
+	title varchar(500) not null,
+	content varchar(1000) not null,
+	writer varchar(100) not null,
+	regDate timestamp default now(),
+	updateDate timestamp default now()
+);
+
+update tbl_board 
+set title = concat(title,tno),
+content = concat(content,tno),
+writer = concat(writer,tno),
+regDate = date_add(regDate,interval mod(tno, 100)day),
+updateDate = date_add(updateDate, interval mod(tno, 100)day)
+;
+
+
+
+-- reply --
+create table tbl_reply (
+	rno int auto_increment primary key,
+	tno int not null,
+	reply varchar(1000) not null,
+	replyer varchar(100) not null,
+	replyDate timestamp default now(),
+	gno int default 0,
+	foreign key(tno) references tbl_board(tno)
+)
+;
+
+-- gno 값 변경 -> 댓글
+update tbl_reply set gno = rno where rno = rno ;
+
+-- reply index
+create index idx_tbl_reply1 on tbl_reply ( tno desc , rno asc);
+
+
+
+-- board_img --
+create table tbl_board_img (
+	imgno int auto_increment primary key,
+	tno int not null,
+	fname varchar(255),
+	ord int default 0 not null,
+	uuid varchar(255),
+	foreign key(tno) references tbl_board(tno) ON DELETE CASCADE
+);
+
+
+
+-- member --
+create table tbl_member (
+email varchar(100) primary key,
+mpw varchar(100) not null,
+mname varchar(100) not null
+);
+
+
+
+-- member Role --
+create table tbl_member_role (
+email varchar(100) not null,
+rolename varchar(50) not null
+);
+
+
+
+-- remember-me --
+create table persistent_logins (
+       username varchar(64) not null,
+       series varchar(64) primary key,
+       token varchar(64) not null,
+       last_used timestamp not null
+);
+
