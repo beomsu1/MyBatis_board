@@ -2,8 +2,6 @@ package org.bs.board0.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +30,7 @@ public class CustomSecurityConfig {
         log.info("-----------------------configuration---------------------");
 
         // 기본 로그인 페이지
-        //http.formLogin(Customizer.withDefaults());
+        // http.formLogin(Customizer.withDefaults());
 
         // 로그인 경로
         http.formLogin(config -> {
@@ -41,12 +39,10 @@ public class CustomSecurityConfig {
             config.loginPage("/member/login");
         });
 
-        // // Login이 안되면 페이지 못넘어가게 막고 다시 Login창으로 보내는 코드
-        // http.authorizeHttpRequests(requests -> {
-
-        //     requests.anyRequest().authenticated();
-
-        // });
+        // csrf 토큰 비활성화
+        http.csrf(config -> {
+            config.disable();
+        });
 
         return http.build();
     }

@@ -88,7 +88,7 @@ public class FileUploadMapperTest {
     @Commit
     public void testDeleteImage(){
 
-        fileUploadMapper.deleteImages(1310705);
+        fileUploadMapper.deleteImages(1310705L);
     }
 
 }
