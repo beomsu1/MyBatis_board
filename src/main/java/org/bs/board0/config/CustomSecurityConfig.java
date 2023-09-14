@@ -56,7 +56,10 @@ public class CustomSecurityConfig {
         http.formLogin(config -> {
 
             // 로그인 페이지 경로 설정
-            config.loginPage("/member/login");
+            config.loginPage("/member/login")
+
+            // 로그인 성공 시 리다이렉트
+            .defaultSuccessUrl("/board/list", true);
         });
 
         // csrf 토큰 비활성화
