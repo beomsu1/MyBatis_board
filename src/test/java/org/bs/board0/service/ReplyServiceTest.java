@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ReplyServiceTest {
     
-    @Autowired(required = false)
+    @Autowired
     private ReplyService replyService;
 
     // 목록 리스트
