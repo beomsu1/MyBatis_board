@@ -11,7 +11,7 @@ insert into tbl_member (email, mpw, mname) values (#{email}, #{mpw}, #{mname})
 </insert>
 
 <!-- MemberRole -->
-<insert id="memberRoleRegist" parameterType="org.bs.board0.dto.MemberRoleRegistDTO">
+<insert id="memberRoleRegist" parameterType="org.bs.board0.dto.MemberRegistDTO">
 insert into tbl_member_role (email, rolename) values (#{email}, #{rolename})
 </insert>
 

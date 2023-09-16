@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/loginPage.css">
+</head>
+
+<body>
+    <div class="login-page">
+        <div class="form">
+            <form action="/member/signup" method="post" class="login-form">
+                <input type="email" name="email" placeholder="email" />
+                <input type="password" name="mpw" placeholder="password" />
+                <input type="text" name="mname" placeholder="mname" />
+                <input type="hidden" name="rolename" value="USER"/>
+                <button>Sign up</button>
+                <p class="message"> <a href="/member/login">Login Page</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

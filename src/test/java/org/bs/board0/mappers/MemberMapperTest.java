@@ -7,8 +7,6 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.bs.board0.dto.MemberReadDTO;
 import org.bs.board0.dto.MemberRegistDTO;
-import org.bs.board0.dto.MemberRoleRegistDTO;
-import org.bs.board0.mappers.MemberMapper;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.log4j.Log4j2;
@@ -23,30 +21,30 @@ public class MemberMapperTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // MemberRegist
-    @Test
-    @Transactional
-    @Commit
-    public void MemberRegistTest(){
+    // // MemberRegist
+    // @Test
+    // @Transactional
+    // @Commit
+    // public void MemberRegistTest(){
 
-        String email = "beomsu_1221@naver.com";
-        String mpw = passwordEncoder.encode("1111");
-        String mname = "beomsu";
+    //     String email = "beomsu_1221@naver.com";
+    //     String mpw = passwordEncoder.encode("1111");
+    //     String mname = "beomsu";
 
-        String rolename = "ADMIN";
-        String rolename1 = "USER";
+    //     String rolename = "ADMIN";
+    //     String rolename1 = "USER";
 
-        MemberRegistDTO memberRegistDTO = new MemberRegistDTO(email, mpw, mname);
-        MemberRoleRegistDTO memberRoleRegistDTO = new MemberRoleRegistDTO(email, rolename);
-        MemberRoleRegistDTO memberRoleRegistDTO2 = new MemberRoleRegistDTO(email, rolename1);
+    //     MemberRegistDTO memberRegistDTO = new MemberRegistDTO(email, mpw, mname);
+    //     MemberRoleRegistDTO memberRoleRegistDTO = new MemberRoleRegistDTO(email, rolename);
+    //     MemberRoleRegistDTO memberRoleRegistDTO2 = new MemberRoleRegistDTO(email, rolename1);
 
-        memberMapper.memberRegist(memberRegistDTO);
-        memberMapper.memberRoleRegist(memberRoleRegistDTO);
-        memberMapper.memberRoleRegist(memberRoleRegistDTO2);
+    //     memberMapper.memberRegist(memberRegistDTO);
+    //     memberMapper.memberRoleRegist(memberRoleRegistDTO);
+    //     memberMapper.memberRoleRegist(memberRoleRegistDTO2);
 
-        log.info("Member Regist finish");
+    //     log.info("Member Regist finish");
 
-    }
+    // }
 
     // memberselect
     @Test
@@ -58,5 +56,28 @@ public class MemberMapperTest {
 
         log.info(result);
     }
+
+
+        // MemberRegist
+    @Test
+    @Transactional
+    @Commit
+    public void MemberRegistTest1(){
+
+        MemberRegistDTO memberRegistDTO = MemberRegistDTO.builder()
+        .email("9805121234@naver.com")
+        .mpw(passwordEncoder.encode("1111"))
+        .mname("beomsu1")
+        .rolename("USER")
+        .build();
+
+        memberMapper.memberRegist(memberRegistDTO);
+        memberMapper.memberRoleRegist(memberRegistDTO);
+
+        log.info("Member Regist finish");
+
+    }
+
+
 
 }
