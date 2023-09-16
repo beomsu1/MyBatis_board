@@ -48,6 +48,9 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // 타임리프 쓸 떄 같이 사용
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	// oauth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 }
 
 tasks.named('test') {

@@ -37,11 +37,12 @@
     width: 100%;
     border: 0;
     padding: 15px;
-    color: #FFFFFF;
+    color: #000000;
     font-size: 14px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .form button:hover,
@@ -59,6 +60,24 @@
 .form .message a {
     color: #4CAF50;
     text-decoration: none;
+}
+
+/* Kakao 로그인 버튼 스타일 */
+.form a.kakao {
+    display: inline-block;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #FEE500;
+    width: 240px;
+    border: 0;
+    padding: 15px;
+    color: #000000;
+    font-size: 14px;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 5px;
 }
 
 .container {

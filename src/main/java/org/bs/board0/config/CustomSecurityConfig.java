@@ -84,6 +84,11 @@ public class CustomSecurityConfig {
             config.accessDeniedHandler(new CustomAccessDeniedHandler());
         });
 
+        //oauth2 login
+        http.oauth2Login(config -> {
+            config.loginPage("/member/login");
+        });
+
         return http.build();
     }
 
