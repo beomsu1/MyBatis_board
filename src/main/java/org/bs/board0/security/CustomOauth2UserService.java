@@ -20,7 +20,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
         log.info("-------------------");
-        log.info(userRequest);
+        log.info("userRequest" + userRequest);
         log.info("-------------------");
 
         return super.loadUser(userRequest);
