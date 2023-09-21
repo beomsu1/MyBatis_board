@@ -1,5 +1,6 @@
 package org.bs.board0.controller;
 
+import org.bs.board0.dto.MemberModifyDTO;
 import org.bs.board0.dto.MemberRegistDTO;
 import org.bs.board0.service.MemberService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -61,12 +62,25 @@ public class MemberController {
     
     // 수정
     @PostMapping("modify")
-    public String PostMemberModify(){
+    public String PostMemberModify(MemberModifyDTO memberModifyDTO){
 
-        return null;
+        log.info("POST | PostMemberModify");
+
+        memberService.memberModify(memberModifyDTO);
+
+        return "redirect:/member/mypage";
     }
 
     // 탈퇴
+    @PostMapping("delete")
+    public String PostMemberDelete(String email){
+
+        log.info("POST | PostMemberDelete");
+
+        memberService.memberDelete(email);
+
+        return "redirect:/member/login";
+    }
 
     // 로그아웃
     @PostMapping("logout")
