@@ -1,6 +1,5 @@
 package org.bs.board0.controller;
 
-
 import org.bs.board0.dto.BoardDTO;
 import org.bs.board0.dto.PageRequestDTO;
 import org.bs.board0.dto.PageResponseDTO;
@@ -24,15 +23,15 @@ import lombok.extern.log4j.Log4j2;
 @EnableMethodSecurity
 public class BoardController {
 
-    private final BoardService boardService; 
-    
+    private final BoardService boardService;
+
     // list
     @GetMapping("list")
-    @PreAuthorize("hasRole('USER')")
-    public void getList(PageRequestDTO pageRequestDTO, Model model){
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public void getList(PageRequestDTO pageRequestDTO, Model model) {
 
         log.info("get List...");
-        
+
         PageResponseDTO<BoardDTO> boardList = boardService.boardList(pageRequestDTO);
 
         model.addAttribute("boardList", boardList);
@@ -40,7 +39,8 @@ public class BoardController {
 
     // get Regist
     @GetMapping("regist")
-    public void getRegist(){
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public void getRegist() {
 
         log.info("get Regist...");
 
@@ -48,9 +48,10 @@ public class BoardController {
 
     // post Regist
     @PostMapping("regist")
-    public String postRegist(BoardDTO boardDTO){
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String postRegist(BoardDTO boardDTO) {
 
-        log.info(boardDTO+"boardDTO");
+        log.info(boardDTO + "boardDTO");
 
         boardService.boardInsert(boardDTO);
 
@@ -61,44 +62,48 @@ public class BoardController {
 
     // get Read
     @GetMapping("read/{tno}")
-    public String getRead(@PathVariable("tno") Long tno , Model model){
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String getRead(@PathVariable("tno") Long tno, Model model) {
 
         log.info("getRead...");
 
         BoardDTO boardDTO = boardService.boardRead(tno);
 
         model.addAttribute("boardRead", boardDTO);
-    
+
         return "/board/read";
     }
 
     // get Modify
     @GetMapping("modify/{tno}")
-    public String getModify(@PathVariable("tno") Long tno , Model model){
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String getModify(@PathVariable("tno") Long tno, Model model) {
 
         log.info("getModify...");
 
         BoardDTO boardDTO = boardService.boardRead(tno);
 
         model.addAttribute("boardModify", boardDTO);
-        
+
         return "/board/modify";
     }
 
     // post Modify
     @PostMapping("modify")
-    public String postModify(BoardDTO boardDTO){
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String postModify(BoardDTO boardDTO) {
 
         log.info("postModify...");
-        
+
         boardService.boardUpdate(boardDTO);
-    
+
         return "redirect:/board/read/" + boardDTO.getTno();
     }
 
-    //post Delete
+    // post Delete
     @PostMapping("delete/{tno}")
-    public String postDelete(@PathVariable("tno") Long tno){
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String postDelete(@PathVariable("tno") Long tno) {
 
         log.info("postDelete...");
 
@@ -106,8 +111,5 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
-
-    
-
 
 }
