@@ -7,6 +7,7 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.bs.board0.dto.MemberReadDTO;
 import org.bs.board0.dto.MemberRegistDTO;
+import org.bs.board0.dto.MemberUpdateDTO;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.log4j.Log4j2;
@@ -27,28 +28,30 @@ public class MemberMapperTest {
     // @Commit
     // public void MemberRegistTest(){
 
-    //     String email = "beomsu_1221@naver.com";
-    //     String mpw = passwordEncoder.encode("1111");
-    //     String mname = "beomsu";
+    // String email = "beomsu_1221@naver.com";
+    // String mpw = passwordEncoder.encode("1111");
+    // String mname = "beomsu";
 
-    //     String rolename = "ADMIN";
-    //     String rolename1 = "USER";
+    // String rolename = "ADMIN";
+    // String rolename1 = "USER";
 
-    //     MemberRegistDTO memberRegistDTO = new MemberRegistDTO(email, mpw, mname);
-    //     MemberRoleRegistDTO memberRoleRegistDTO = new MemberRoleRegistDTO(email, rolename);
-    //     MemberRoleRegistDTO memberRoleRegistDTO2 = new MemberRoleRegistDTO(email, rolename1);
+    // MemberRegistDTO memberRegistDTO = new MemberRegistDTO(email, mpw, mname);
+    // MemberRoleRegistDTO memberRoleRegistDTO = new MemberRoleRegistDTO(email,
+    // rolename);
+    // MemberRoleRegistDTO memberRoleRegistDTO2 = new MemberRoleRegistDTO(email,
+    // rolename1);
 
-    //     memberMapper.memberRegist(memberRegistDTO);
-    //     memberMapper.memberRoleRegist(memberRoleRegistDTO);
-    //     memberMapper.memberRoleRegist(memberRoleRegistDTO2);
+    // memberMapper.memberRegist(memberRegistDTO);
+    // memberMapper.memberRoleRegist(memberRoleRegistDTO);
+    // memberMapper.memberRoleRegist(memberRoleRegistDTO2);
 
-    //     log.info("Member Regist finish");
+    // log.info("Member Regist finish");
 
     // }
 
     // memberselect
     @Test
-    public void memberSelectTest(){
+    public void memberSelectTest() {
 
         String email = "beomsu_1221@naver.com";
 
@@ -57,19 +60,18 @@ public class MemberMapperTest {
         log.info(result);
     }
 
-
-        // MemberRegist
+    // MemberRegist
     @Test
     @Transactional
     @Commit
-    public void MemberRegistTest1(){
+    public void memberRegistTest1() {
 
         MemberRegistDTO memberRegistDTO = MemberRegistDTO.builder()
-        .email("9805121234@naver.com")
-        .mpw(passwordEncoder.encode("1111"))
-        .mname("beomsu1")
-        .rolename("USER")
-        .build();
+                .email("9805121234@naver.com")
+                .mpw(passwordEncoder.encode("1111"))
+                .mname("beomsu1")
+                .rolename("USER")
+                .build();
 
         memberMapper.memberRegist(memberRegistDTO);
         memberMapper.memberRoleRegist(memberRegistDTO);
@@ -78,6 +80,22 @@ public class MemberMapperTest {
 
     }
 
+    // memberUpdate
+    @Test
+    @Transactional
+    @Commit
+    public void memberUpdateTest() {
 
+        MemberUpdateDTO memberUpdateDTO = MemberUpdateDTO.builder()
+                .email("bs1@naver.com")
+                .mpw(passwordEncoder.encode("1111"))
+                .mname("beomsu1221")
+                .build();
+
+        memberMapper.memberUpdate(memberUpdateDTO);
+
+        log.info("member information update");
+
+    }
 
 }

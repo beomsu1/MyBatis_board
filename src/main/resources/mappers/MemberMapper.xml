@@ -36,5 +36,12 @@ where tm.email = #{email}
 
 </select>
 
+<!-- memberUpdate -->
+<update id="memberUpdate" parameterType="org.bs.board0.dto.MemberUpdateDTO">
+
+update tbl_member set mpw = #{mpw} , mname = #{mname} where email = #{email}
+
+</update>
+
 
 </mapper>

@@ -26,6 +26,8 @@ public class MemberServiceImpl implements MemberService{
         .build());
         memberMapper.memberRoleRegist(memberRegistDTO);
 
+        log.info("memberRegistService ---------------------");
+
     }
 
 
