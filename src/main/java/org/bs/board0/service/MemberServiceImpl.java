@@ -1,6 +1,7 @@
 package org.bs.board0.service;
 
 import org.bs.board0.dto.MemberRegistDTO;
+import org.bs.board0.dto.MemberModifyDTO;
 import org.bs.board0.mappers.MemberMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,24 @@ public class MemberServiceImpl implements MemberService{
 
         log.info("memberRegistService ---------------------");
 
+    }
+
+    @Override
+    public void memberModify(MemberModifyDTO memberModifyDTO) {
+
+        memberMapper.memberModify(MemberModifyDTO.builder()
+        .email(memberModifyDTO.getEmail())
+        .mpw(passwordEncoder.encode(memberModifyDTO.getMpw()))
+        .mname(memberModifyDTO.getMname())
+        .build());
+
+        log.info("memberModifyService -------------------");
+    }
+
+    @Override
+    public int memberDelete(String email) {
+
+        return memberMapper.memberDelete(email);
     }
 
 

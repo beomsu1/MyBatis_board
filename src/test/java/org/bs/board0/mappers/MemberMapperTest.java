@@ -7,7 +7,7 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.bs.board0.dto.MemberReadDTO;
 import org.bs.board0.dto.MemberRegistDTO;
-import org.bs.board0.dto.MemberUpdateDTO;
+import org.bs.board0.dto.MemberModifyDTO;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.log4j.Log4j2;
@@ -67,7 +67,7 @@ public class MemberMapperTest {
     public void memberRegistTest1() {
 
         MemberRegistDTO memberRegistDTO = MemberRegistDTO.builder()
-                .email("9805121234@naver.com")
+                .email("bs1@naver.com")
                 .mpw(passwordEncoder.encode("1111"))
                 .mname("beomsu1")
                 .rolename("USER")
@@ -84,18 +84,31 @@ public class MemberMapperTest {
     @Test
     @Transactional
     @Commit
-    public void memberUpdateTest() {
+    public void memberModifyTest() {
 
-        MemberUpdateDTO memberUpdateDTO = MemberUpdateDTO.builder()
-                .email("bs1@naver.com")
+        MemberModifyDTO memberModifyDTO = MemberModifyDTO.builder()
+                .email("qwe1@naver.com")
                 .mpw(passwordEncoder.encode("1111"))
                 .mname("beomsu1221")
                 .build();
 
-        memberMapper.memberUpdate(memberUpdateDTO);
+        memberMapper.memberModify(memberModifyDTO);
 
         log.info("member information update");
 
+    }
+
+    // memberDelete
+    @Test
+    @Transactional
+    @Commit
+    public void memberDeleteTest(){
+
+        String email = "bs1@naver.com";
+
+        memberMapper.memberDelete(email);
+
+        log.info("member Delete finish");
     }
 
 }

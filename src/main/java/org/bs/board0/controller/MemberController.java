@@ -60,6 +60,11 @@ public class MemberController {
     }
     
     // 수정
+    @PostMapping("modify")
+    public String PostMemberModify(){
+
+        return null;
+    }
 
     // 탈퇴
 

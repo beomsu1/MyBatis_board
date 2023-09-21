@@ -37,11 +37,17 @@ where tm.email = #{email}
 </select>
 
 <!-- memberUpdate -->
-<update id="memberUpdate" parameterType="org.bs.board0.dto.MemberUpdateDTO">
+<update id="memberModify" parameterType="org.bs.board0.dto.MemberModifyDTO">
 
 update tbl_member set mpw = #{mpw} , mname = #{mname} where email = #{email}
 
 </update>
 
+<!-- memberDelete -->
+<delete id="memberDelete">
+
+delete from tbl_member where email =#{email}
+
+</delete>
 
 </mapper>
