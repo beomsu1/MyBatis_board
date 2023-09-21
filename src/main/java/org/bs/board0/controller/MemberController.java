@@ -24,14 +24,14 @@ public class MemberController {
     @GetMapping("login")
     public void getLoginPage(){
 
-        log.info("Get | loginPage");
+        log.info("GET | loginPage");
     }
 
     // 회원가입 페이지
     @GetMapping("signup")
     public void getSignupPage(){
 
-        log.info("Get | SignupPage");
+        log.info("GET | SignupPage");
     }
 
     // 회원가입
@@ -41,5 +41,12 @@ public class MemberController {
         memberService.memberRegist(memberRegistDTO);
 
         return "redirect:/member/login";
+    }
+
+    // 수정 페이지
+    @GetMapping("modify")
+    public void getModifyPage(){
+
+        log.info("GET | getModifyPage");
     }
 }

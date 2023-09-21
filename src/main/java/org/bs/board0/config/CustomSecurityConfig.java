@@ -3,6 +3,7 @@ package org.bs.board0.config;
 import javax.sql.DataSource;
 
 import org.bs.board0.security.handler.CustomAccessDeniedHandler;
+import org.bs.board0.security.handler.CustomOAuthSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -86,7 +87,12 @@ public class CustomSecurityConfig {
 
         //oauth2 login
         http.oauth2Login(config -> {
+
+            // 로그인 페이지 설정
             config.loginPage("/member/login");
+
+            // 핸들러 설정
+            config.successHandler(new CustomOAuthSuccessHandler());
         });
 
         return http.build();

@@ -59,10 +59,11 @@ mname varchar(100) not null
 
 
 
--- member Role --
+-- member_role --
 create table tbl_member_role (
 email varchar(100) not null,
 rolename varchar(50) not null
+FOREIGN KEY (email) REFERENCES tbl_member(email)
 );
 
 
