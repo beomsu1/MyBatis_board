@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard 3</title>
 
+  <link rel="stylesheet" href="/css/layout.css">
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -860,8 +862,12 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v3</li>
+                <li class="breadcrumb-item">
+                  <form method="post" action="/member/logout" class="actionform">
+                    <a href="/member/mypage"class="button">MyPage</a>
+                    <button>Logout</button>
+                  </form>
+                </li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->

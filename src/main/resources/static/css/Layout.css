@@ -1,0 +1,25 @@
+.actionform {
+    text-align: center;
+}
+
+/* MyPage 링크 스타일 */
+a.button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-right: 10px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    cursor: pointer;
+}
+
+/* 로그아웃 버튼 스타일 */
+button {
+    padding: 10px 15px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -43,10 +43,32 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    // 마이 페이지
+    @GetMapping("mypage")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public void getMypage(){
+
+        log.info("GET | Mypage");
+    }
+
     // 수정 페이지
     @GetMapping("modify")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public void getModifyPage(){
 
         log.info("GET | getModifyPage");
+    }
+    
+    // 수정
+
+    // 탈퇴
+
+    // 로그아웃
+    @PostMapping("logout")
+    public String PostLogout(){
+
+        log.info("POST | PostLogout");
+
+        return "redirect:/member/login";
     }
 }
