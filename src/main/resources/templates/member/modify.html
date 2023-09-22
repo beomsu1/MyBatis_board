@@ -12,18 +12,73 @@
     <div class="container-fluid pt-4 px-4" layout:fragment="content">
         <div class="col-sm-12 col-xl-12">
             <div class="bg-light rounded h-100 p-4">
-                <h2 class="mb-4">회원 정보 수정</h2>
-                
+                <h2 class="mb-4">Member Modify</h2>
+
+                <form method="post" action="/member/modify" class="actionForm">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" name="email" th:value="${userDetails.email}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="manme" class="form-label">Mname</label>
+                        <input type="text" class="form-control" name="mname" th:value="${userDetails.mname}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="manme" class="form-label">password</label>
+                        <input type="password" class="form-control" name="mpw">
+                    </div>
 
                     <div class="button_wrap">
                         <button class="btn btn-primary modifyBtn">정보 수정</button>
                         <button class="btn btn-danger btnDelete">회원 탈퇴</button>
                         <a href="/board/list" class="btn btn-secondary returnBtn">목록</a>
                     </div>
+                </form>
             </div>
         </div>
 
 
 </body>
+
+<script layout:fragment="script" th:inline="javascript">
+
+    // 객체 설정
+    const actionForm = document.querySelector(".actionForm")
+    const btnDelete = document.querySelector(".btnDelete")
+    const modifyBtn = document.querySelector(".modifyBtn")
+
+    // 회원 탈퇴 버튼 클릭 이벤트 핸들러
+    btnDelete.addEventListener("click", (e) => {
+        // 이벤트 방지
+        e.preventDefault()
+        e.stopPropagation()
+
+        // 회원 탈퇴 확인 알림창
+        if (confirm("회원 탈퇴하시겠습니까?")) {
+
+            // 탈퇴 요청을 서버로 보내는 코드
+            actionForm.setAttribute("action", `/member/delete`)
+            actionForm.submit()
+
+            // 탈퇴
+            alert("탈퇴되었습니다.")
+        }
+    }, false);
+
+    // 수정버튼 핸들러
+    modifyBtn.addEventListener("click", (e) => {
+
+        // 이벤트 방지
+        e.preventDefault()
+        e.stopPropagation()
+
+        actionForm.setAttribute("action" , `/member/modify`)
+        actionForm.submit()
+
+        alert("수정되었습니다.")
+
+    }, false)
+
+</script>
 
 </html>

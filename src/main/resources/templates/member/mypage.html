@@ -13,12 +13,27 @@
         <div class="col-sm-12 col-xl-12">
             <div class="bg-light rounded h-100 p-4">
                 <h2 class="mb-4">Mypage</h2>
-                
 
-                    <div class="button_wrap">
-                        <a href="/member/modify" class="btn btn-primary modifyBtn">정보 수정</a>
-                        <a href="/board/list" class="btn btn-secondary returnBtn">목록</a>
-                    </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" class="form-control" id="email" th:value="${userDetails.email}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="manme" class="form-label">Mname</label>
+                    <input type="text" class="form-control" id="mname" th:value="${userDetails.mname}"
+                        readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="rolename" class="form-label">Role</label>
+                    <ul>
+                        <li th:each="authority : ${userDetails.authorities}" th:text="${#strings.substring(authority, 5)}"></li>
+                    </ul>
+                </div>
+
+                <div class="button_wrap">
+                    <a href="/member/modify" class="btn btn-primary modifyBtn">정보 수정</a>
+                    <a href="/board/list" class="btn btn-secondary returnBtn">목록</a>
+                </div>
             </div>
         </div>
 

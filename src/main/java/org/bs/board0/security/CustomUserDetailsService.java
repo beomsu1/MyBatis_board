@@ -44,19 +44,19 @@ public class CustomUserDetailsService implements UserDetailsService {
     // }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         log.info("----------------");
-        log.info(username);
+        log.info(email);
         log.info("----------------");
 
-        MemberReadDTO readDTO = memberMapper.memberSelect(username);
+        MemberReadDTO readDTO = memberMapper.memberSelect(email);
 
         log.info("----------------");
         log.info(readDTO);
         log.info("----------------");
 
-        MemberDTO memberDTO = new MemberDTO(username, readDTO.getMpw(), readDTO.getMname(), readDTO.getRolenames());
+        MemberDTO memberDTO = new MemberDTO(email, readDTO.getMpw(), readDTO.getMname(), readDTO.getRolenames());
 
         return memberDTO;
     }
