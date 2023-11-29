@@ -21,6 +21,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class CustomSecurityConfig {
 
+    // 데이터베이스와의 연결을 관리하는 인터페이스
     private final DataSource dataSource;
 
     // @Bean -> 스프링 프레임워크의 핵심 개념 중 하나로, 코드의 구조화와 관리, 의존성 주입, 테스트 용이성,
@@ -36,7 +37,7 @@ public class CustomSecurityConfig {
         // 데이터베이스 연결 정보를 설정 후 repo를 반환
         repo.setDataSource(dataSource);
         return repo;
-    };
+    }
 
     // BCryptPasswordEncoder 사용하여 passwordEncoder
     @Bean
