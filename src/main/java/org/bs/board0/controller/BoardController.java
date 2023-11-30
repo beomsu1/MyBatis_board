@@ -71,7 +71,7 @@ public class BoardController {
 
         model.addAttribute("boardRead", boardDTO);
 
-        return "/board/read";
+        return "board/read";
     }
 
     // get Modify
@@ -85,7 +85,7 @@ public class BoardController {
 
         model.addAttribute("boardModify", boardDTO);
 
-        return "/board/modify";
+        return "board/modify";
     }
 
     // post Modify
@@ -109,7 +109,7 @@ public class BoardController {
 
         boardService.boardDelete(tno);
 
-        return "redirect:/board/list";
+        return "redirect:board/list";
     }
 
 }

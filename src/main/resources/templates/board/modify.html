@@ -148,7 +148,7 @@
                 const header = { headers: { "Content-Type": "multipart/form-data" } }
 
                 // 비동기
-                axios.post("http://localhost:8080/api/files/upload", formData, header).then(res => {
+                axios.post("http://ToyBoardServer-env.eba-xvhrcf3g.ap-northeast-2.elasticbeanstalk.com/api/files/upload", formData, header).then(res => {
                     const result = res.data
                     console.log(result)
                     showImages(result)

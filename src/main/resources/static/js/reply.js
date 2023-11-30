@@ -1,7 +1,7 @@
 /* 댓글 비동기 통신 */
 
 // localhost 정의
-const url = `http://localhost:8080/api/replies/`
+const url = `http://ToyBoardServer-env.eba-xvhrcf3g.ap-northeast-2.elasticbeanstalk.com/api/replies/`
 
 // list
 // replyLast - false -> 댓글 마지막 페이지로 이동

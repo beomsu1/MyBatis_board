@@ -26,7 +26,8 @@ create table tbl_reply (
 	replyer varchar(100) not null,
 	replyDate timestamp default now(),
 	gno int default 0,
-	foreign key(tno) references tbl_board(tno)
+	status int default 0,
+	foreign key(tno) references tbl_board(tno) ON DELETE CASCADE
 )
 ;
 
