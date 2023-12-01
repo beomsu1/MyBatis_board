@@ -40,9 +40,11 @@ public class BoardController {
     // get Regist
     @GetMapping("regist")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public void getRegist() {
+    public String getRegist() {
 
         log.info("get Regist...");
+
+        return "board/regist";
 
     }
 

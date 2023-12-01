@@ -38,7 +38,20 @@
                             readonly>
                     </div>
 
-
+                    <!-- fnames가 존재할 때 활성화 -->
+                    <div th:if="${not #lists.isEmpty(boardRead.fnames)}">
+                        <div class="mb-3">
+                            <label for="fnames" class="form-label">첨부 파일</label>
+                            <table>
+                                <tr>
+                                    <td th:each="fname : ${boardRead.fnames}">
+                                        <img th:src="@{|http://elasticbeanstalk-ap-northeast-2-572891487161.s3.ap-northeast-2.amazonaws.com/${fname}|}"
+                                            width="300">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
 
                     <div class="button_wrap">
                         <button class="btn btn-primary modifyBtn">수정</button>
@@ -53,27 +66,12 @@
 
         </div>
 
-        <!-- 댓글 등록창 -->
-        <div class="col-sm-12 col-md-12 col-xl-12">
-            <div class="h-100 bg-light rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="mb-0">Reply Register</h6>
-                </div>
-                <div class="mb-3 replyRegister">
-                    <input type="hidden" name="tno" th:value="${boardRead.tno}">
-                    <input type="text" name="replyer" th:value="${#authentication.principal.mname}" readonly>
-                    <input type="text" name="reply" class="form-control" placeholder="내용을 입력해주세요">
-                </div>
-                <div class="button_wrap">
-                    <button class="btn btn-primary btnRegister">Reply Register</button>
-                </div>
-            </div>
 
             <!-- 댓글 화면 창 -->
             <div class="col-sm-12 col-md-12 col-xl-12">
                 <div class="h-100 bg-light rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h6 class="mb-0">Reply</h6>
+                        <h6 class="mb-0">댓글</h6>
                     </div>
                     <div class="replyWrap"></div>
                     <div class="btn-toolbar" role="toolbar" style="justify-content: center;">
@@ -83,12 +81,28 @@
                 </div>
             </div>
 
+            <!-- 댓글 등록창 -->
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div class="h-100 bg-light rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h6 class="mb-0">댓글 쓰기</h6>
+                    </div>
+                    <div class="mb-3 replyRegister">
+                        <input type="hidden" name="tno" th:value="${boardRead.tno}">
+                        <input type="hidden" name="replyer" th:value="${#authentication.principal.mname}" readonly>
+                        <input type="text" name="reply" class="form-control" placeholder="내용을 입력해주세요">
+                    </div>
+                    <div class="button_wrap">
+                        <button class="btn btn-primary btnRegister">작성</button>
+                    </div>
+                </div>
+
             <!-- 대댓글 생성 모달-->
             <div class="modal replyModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            Reply Register
+                            답글 쓰기
                         </div>
                         <div class="modal-body replyRegister2">
                             <input type="hidden" name="tno" th:value="${boardRead.tno}">
@@ -97,9 +111,9 @@
                             <div class="replyGno"></div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary btnRegister2">Reply Register</button>
+                            <button class="btn btn-primary btnRegister2">작성</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
-                                Close
+                                닫기
                             </button>
 
                         </div>
@@ -111,7 +125,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            Reply Modify
+                            댓글 수정
                         </div>
                         <div class="modal-body replyModify">
                             <input type="hidden" name="replyer" th:value="${#authentication.principal.mname}">
@@ -119,10 +133,10 @@
                             <div class="replyCategory"></div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary btnReplyModify">Reply Modify</button>
-                            <button class="btn btn-danger btnDelete">Reply Delete</button>
+                            <button class="btn btn-primary btnReplyModify">수정</button>
+                            <button class="btn btn-danger btnDelete">삭제</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
-                                Close
+                                닫기
                             </button>
                         </div>
                     </div>
@@ -200,7 +214,7 @@
 
                     // axios 통신
                     replyPostRegist(replyData).then(data => {
-                        alert(data.result + "번이 등록되었습니다.")
+                        alert("댓글이 등록되었습니다.")
                         replyRegist.querySelector("input[name=reply]").value = ""
                         getListDefault()
                     }, false)
@@ -249,7 +263,7 @@
 
                     // 댓글 등록 api 사용
                     replyPostRegist(replyData).then(data => {
-                        alert(data.result + "번 댓글이 등록되었습니다.")
+                        alert("댓글이 등록되었습니다.")
                         getListDefault()
                         replyModal.hide()
                     })
